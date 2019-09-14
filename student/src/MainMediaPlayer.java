@@ -47,7 +47,7 @@ public class MainMediaPlayer extends Application implements MouseListener
     Image image;
     DropShadow dropshadow;
     BorderPane borderPane;
-    Button enter = new Button();
+    Button enterButton = new Button();
     String fileName="";
     Toolkit tk = Toolkit.getDefaultToolkit();
     Image cur = new Image("cursor.png");
@@ -58,169 +58,190 @@ public class MainMediaPlayer extends Application implements MouseListener
     public void start(Stage primaryStage) throws FileNotFoundException
     {
         primaryStage.getIcons().add(new Image("media_player_icon_by_xylomon.png"));
-        ImageView img=new ImageView();
-        image = new Image("572703.png");
-        img.setImage(image);
-        borderPane = new BorderPane();
 
-        dropshadow = new DropShadow();
-        dropshadow.setOffsetY(5.0);
-        dropshadow.setOffsetX(5.0);
-        enter.setScaleY(1.0);
-        enter.setMinHeight(100);
-        enter.setMaxHeight(100);
-        enter.setPrefHeight(100);
-        enter.setStyle(
-            "-fx-background-radius: 10em; " +
-            "-fx-background-repeat: stretch;   \n" +
-            "-fx-background-size: 100 100;\n" +
-            "-fx-background-position: center center;\n" +
-            "-fx-min-width: 100px; " +
-            "-fx-min-height: 100px; " +
-            "-fx-max-width: 100px; " +
-            "-fx-max-height: 100px; " +
-            "-fx-background-image: url('opened_folder1600.png');" +
-            "-fx-background-insets: 0px; " +
-            "-fx-padding: 0px;"
-        );
-
-        enter.setOnMouseEntered(e -> {
-           enter.setStyle(
-            "-fx-background-radius: 10em; " +
-            "-fx-background-repeat: stretch;   \n" +
-            "-fx-background-size: 100 100;\n" +
-            "-fx-background-position: center center;\n" +
-            "-fx-min-width: 100px; " +
-            "-fx-min-height: 100px; " +
-            "-fx-max-width: 100px; " +
-            "-fx-max-height: 100px; " +
-            "-fx-background-image: url('opened_folder1600.png');" +
-            "-fx-background-color: #80ced6;" +
-            "-fx-background-insets: 0px; " +
-            "-fx-padding: 0px;"
-          );
-        });
-        enter.setOnMouseExited(e -> {
-            enter.setStyle(
-            "-fx-background-radius: 10em; " +
-            "-fx-background-repeat: stretch;   \n" +
-            "-fx-background-size: 100 100;\n" +
-            "-fx-background-position: center center;\n" +
-            "-fx-min-width: 100px; " +
-            "-fx-min-height: 100px; " +
-            "-fx-max-width: 100px; " +
-            "-fx-max-height: 100px; " +
-            "-fx-background-image: url('opened_folder1600.png');" +
-            "-fx-background-color: white;" +
-            "-fx-background-insets: 0px; " +
-            "-fx-padding: 0px;"
-          );
-        });
-
-        // ************* Choose File ******************
-        enter.setText("");
-        enter.setOnAction((ActionEvent e) -> {
-            chooseFile(0);
-        });
-
-        borderPane.setStyle("-fx-background-image: url('573012.png');\n" +
-            "    -fx-background-repeat: stretch;   \n" +
-            "    -fx-background-size: 1400 800;\n" +
-            "    -fx-background-position: center center;\n" +
-            "    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);");
-        borderPane.setCenter(enter);
-
-        Scene scene = new Scene(borderPane, 1200, 700);
-        borderPane.setMinSize(400, 300);
-        img.setEffect(dropshadow);
-        primaryStage.setFullScreen(false);
-        primaryStage.setTitle("YRASS Player");
-        primaryStage.setScene(scene);
-        primaryStage.getScene().setCursor(new ImageCursor(cur,0,0));
+        Scene mainScene = setUpScene(primaryStage);
         primaryStage.show();
 
 
-        // ***************** volume scrolling ***************
-        scene.setOnScroll(new EventHandler<javafx.scene.input.ScrollEvent>() {
-            @Override
-            public void handle(ScrollEvent event)
-            {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                double deltaY = event.getDeltaY();
-                double prev = volumeSlider.getValue();
-                volumeSlider.setValue((prev+deltaY/20.0));
-                mediaPlayer.setVolume((prev+deltaY/20.0));
-            }
+        // *** Scene events ***
+        //for volume scrolling
+        mainScene.setOnScroll(event -> onSceneScroll(event));
 
+        //global mouse clicks
+        borderPane.setOnMouseClicked(event -> onSceneClicked(event, primaryStage));
+
+        //detect keys pressed
+        mainScene.setOnKeyPressed(event -> onKeyPressed(event));
+    }
+
+    //creates the main javafx scene and configures the stage to accomodate it
+    Scene setUpScene(Stage primaryStage)
+    {
+        ImageView img = new ImageView();
+        image = new Image("572703.png");
+        img.setImage(image);
+        dropshadow = new DropShadow();
+        dropshadow.setOffsetY(5.0);
+        dropshadow.setOffsetX(5.0);
+        img.setEffect(dropshadow);
+
+        addEnterButton();
+
+        borderPane = new BorderPane();
+        borderPane.setStyle("-fx-background-image: url('573012.png');\n" +
+                "    -fx-background-repeat: stretch;   \n" +
+                "    -fx-background-size: 1400 800;\n" +
+                "    -fx-background-position: center center;\n" +
+                "    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);");
+        borderPane.setCenter(enterButton);
+        borderPane.setMinSize(400, 300);
+
+        Scene scene = new Scene(borderPane, 1200, 700);
+
+        primaryStage.setFullScreen(false);
+        primaryStage.setTitle("Mild Ones Media Player");
+        primaryStage.setScene(scene);
+        primaryStage.getScene().setCursor(new ImageCursor(cur,0,0));
+
+        return scene;
+    }
+
+    //adds the button for opening the first file
+    void addEnterButton()
+    {
+        enterButton.setScaleY(1.0);
+        enterButton.setMinHeight(100);
+        enterButton.setMaxHeight(100);
+        enterButton.setPrefHeight(100);
+        enterButton.setStyle(
+                "-fx-background-radius: 10em; " +
+                        "-fx-background-repeat: stretch;   \n" +
+                        "-fx-background-size: 100 100;\n" +
+                        "-fx-background-position: center center;\n" +
+                        "-fx-min-width: 100px; " +
+                        "-fx-min-height: 100px; " +
+                        "-fx-max-width: 100px; " +
+                        "-fx-max-height: 100px; " +
+                        "-fx-background-image: url('opened_folder1600.png');" +
+                        "-fx-background-insets: 0px; " +
+                        "-fx-padding: 0px;"
+        );
+
+        enterButton.setOnMouseEntered(e -> {
+            enterButton.setStyle(
+                    "-fx-background-radius: 10em; " +
+                            "-fx-background-repeat: stretch;   \n" +
+                            "-fx-background-size: 100 100;\n" +
+                            "-fx-background-position: center center;\n" +
+                            "-fx-min-width: 100px; " +
+                            "-fx-min-height: 100px; " +
+                            "-fx-max-width: 100px; " +
+                            "-fx-max-height: 100px; " +
+                            "-fx-background-image: url('opened_folder1600.png');" +
+                            "-fx-background-color: #80ced6;" +
+                            "-fx-background-insets: 0px; " +
+                            "-fx-padding: 0px;"
+            );
         });
-        borderPane.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>()
-        {
-            @Override
-            public void handle(javafx.scene.input.MouseEvent event)
-            {
-                //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    if (event.getClickCount() == 2) {
-                        fullScreenClick++;
-                        if (fullScreenClick%2==1) {
-                            try {
-                                primaryStage.setFullScreen(true);
-                                MediaProp.setVisible(false);
-                            }
-                            catch(Exception e) {
-
-                            }
-                        }
-                        else {
-                            try {
-                                primaryStage.setFullScreen(false);
-                                MediaProp.setVisible(true);
-                            }
-                            catch(Exception e)
-                            {
-
-                            }
-                        }
-                        mediaPlayer.play();
-                    }
-                    if (event.getClickCount() == 1)
-                    {
-                        playButtonCount++;
-                        if (playButtonCount%2==1) {
-                            playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
-                            playButton.setTooltip(new Tooltip("Play"));
-                            mediaPlayer.pause();
-                        }
-                        else {
-                            playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
-                            playButton.setTooltip(new Tooltip("Pause"));
-                            mediaPlayer.play();
-                        }
-                    }
-                }
-            }
+        enterButton.setOnMouseExited(e -> {
+            enterButton.setStyle(
+                    "-fx-background-radius: 10em; " +
+                            "-fx-background-repeat: stretch;   \n" +
+                            "-fx-background-size: 100 100;\n" +
+                            "-fx-background-position: center center;\n" +
+                            "-fx-min-width: 100px; " +
+                            "-fx-min-height: 100px; " +
+                            "-fx-max-width: 100px; " +
+                            "-fx-max-height: 100px; " +
+                            "-fx-background-image: url('opened_folder1600.png');" +
+                            "-fx-background-color: white;" +
+                            "-fx-background-insets: 0px; " +
+                            "-fx-padding: 0px;"
+            );
         });
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent ke ) {
-                if(ke.getCode()==KeyCode.ALT) {
-                    playButtonCount++;
-                        if (playButtonCount%2==1) {
-                            playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
-                            playButton.setTooltip(new Tooltip("Play"));
-                            mediaPlayer.pause();
-                        }
-                        else {
-                            playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
-                            playButton.setTooltip(new Tooltip("Pause"));
-                            mediaPlayer.play();
-                        }
-                }
-                if(ke.getCode()==KeyCode.C) {
-                    chooseFile(1);
-                }
-            }
+
+        // ************* Choose File ******************
+        enterButton.setText("");
+        enterButton.setOnAction((ActionEvent e) -> {
+            chooseFile(0);
         });
     }
+
+    //when the mouse wheel is scrolled in the scene, adjusts the volume
+    void onSceneScroll(ScrollEvent event)
+    {
+        double deltaY = event.getDeltaY();
+        double prev = volumeSlider.getValue();
+        volumeSlider.setValue((prev+deltaY/20.0));
+        mediaPlayer.setVolume((prev+deltaY/20.0));
+    }
+
+    //handles click events in the scene
+    void onSceneClicked(javafx.scene.input.MouseEvent event, Stage primaryStage)
+    {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                fullScreenClick++;
+                if (fullScreenClick%2==1) {
+                    try {
+                        primaryStage.setFullScreen(true);
+                        MediaProp.setVisible(false);
+                    }
+                    catch(Exception e) {
+
+                    }
+                }
+                else {
+                    try {
+                        primaryStage.setFullScreen(false);
+                        MediaProp.setVisible(true);
+                    }
+                    catch(Exception e)
+                    {
+
+                    }
+                }
+                mediaPlayer.play();
+            }
+            if (event.getClickCount() == 1)
+            {
+                playButtonCount++;
+                if (playButtonCount%2==1) {
+                    playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
+                    playButton.setTooltip(new Tooltip("Play"));
+                    mediaPlayer.pause();
+                }
+                else {
+                    playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+                    playButton.setTooltip(new Tooltip("Pause"));
+                    mediaPlayer.play();
+                }
+            }
+        }
+    }
+
+    //handles key presses
+    void onKeyPressed(KeyEvent ke)
+    {
+        if(ke.getCode()==KeyCode.ALT) {
+            playButtonCount++;
+            if (playButtonCount%2==1) {
+                playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setTooltip(new Tooltip("Play"));
+                mediaPlayer.pause();
+            }
+            else {
+                playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setTooltip(new Tooltip("Pause"));
+                mediaPlayer.play();
+            }
+        }
+        if(ke.getCode()==KeyCode.C) {
+            chooseFile(1);
+        }
+    }
+
 
     Button playButton,pauseButton,forwardButton,backButton,filesButton,startButton,endButton,MediaProp,speedButton;
     Slider volumeSlider,timeSlider,slider,speedSlider;
