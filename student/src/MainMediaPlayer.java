@@ -259,39 +259,226 @@ public class MainMediaPlayer extends Application implements MouseListener
         toolBar.alignmentProperty().isBound();
         toolBar.setSpacing(5);
         toolBar.setStyle("-fx-background-color: #80ced6");
+
+        //add Buttons and Sliders
+        addPlayButton();
+        addStartButton();
+        addBackButton();
+        addForwardButton();
+        addFilesButton();
+        addMediaPropButton();
+        addVolumeSlider();
+        addTimeSlider();
+        addSpeedButton();
+        addSpeedSlider();
+        addVolButton();
+        //addPauseButton();
+
+
+        toolBar.getChildren().addAll(filesButton,speedButton,speedSlider,startButton,backButton,playButton,forwardButton,time,timeSlider,volbtn,volumeSlider,vollabel,MediaProp);
+        return toolBar;
+    }
+//add Pause Button
+//void addPauseButton() {
+    //pauseButton = new Button();
+    //pauseButton.setMaxSize(32,32);
+    //pauseButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+    //pauseButton.setMaxSize(32,32);
+    //pauseButton.setTooltip(new Tooltip("Pause"));
+
+   /*pauseButton.setOnAction((ActionEvent e) -> {
+       mediaPlayer.pause();
+   });*/
+//}
+
+    //add Play Button
+    void addPlayButton() {
         playButton = new Button();
-        playButton.setMaxSize(32,32);
-        //pauseButton = new Button();
-        //pauseButton.setMaxSize(32,32);
-        startButton=new Button();
-        startButton.setMaxSize(32,32);
-        startButton.setStyle("-fx-graphic: url('if_Replay.png'); \n" + "-fx-background-color: #80ced6");
-        backButton = new Button();
-        backButton.setMaxSize(32,32);
-        forwardButton = new Button();
-        forwardButton.setMaxSize(32,32);
-        filesButton = new Button();
-        //pauseButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
-        //pauseButton.setMaxSize(32,32);
+        playButton.setMaxSize(32, 32);
         playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
-        playButton.setMaxSize(32,32);
+        playButton.setMaxSize(32, 32);
+        playButton.setTooltip(new Tooltip("Pause"));
+
+        playButton.setOnMouseEntered(e -> {
+            if (playButtonCount % 2 == 0)
+                playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #000777");
+            else
+                playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #000777");
+        });
+        playButton.setOnMouseExited(e -> {
+            if (playButtonCount % 2 == 0)
+                playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+            else
+                playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
+        });
+        playButton.setOnAction((ActionEvent e) -> {
+            playButtonCount++;
+            if (playButtonCount % 2 == 1) {
+                playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setTooltip(new Tooltip("Play"));
+                mediaPlayer.pause();
+            } else {
+                playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setTooltip(new Tooltip("Pause"));
+                mediaPlayer.play();
+            }
+        });
+
+    }
+
+    //add start button
+    void addStartButton() {
+        startButton = new Button();
+        startButton.setMaxSize(32, 32);
+        startButton.setStyle("-fx-graphic: url('if_Replay.png'); \n" + "-fx-background-color: #80ced6");
+        startButton.setTooltip(new Tooltip("Replay"));
+
+        startButton.setOnAction((ActionEvent e) -> {
+
+            mediaPlayer.seek(Duration.ZERO);
+        });
+        startButton.setOnMouseEntered(e -> {
+            startButton.setStyle("-fx-graphic: url('if_Replay.png'); \n" + "-fx-background-color: #000777");
+        });
+        startButton.setOnMouseExited(e -> {
+            startButton.setStyle("-fx-graphic: url('if_Replay.png'); \n" + "-fx-background-color: #80ced6");
+        });
+    }
+
+    //add back button
+    void addBackButton() {
+        backButton = new Button();
+        backButton.setMaxSize(32, 32);
         backButton.setStyle("-fx-graphic: url('if_Rewind_2001873.png'); \n" + "-fx-background-color: #80ced6");
-        backButton.setMaxSize(32,32);
+        backButton.setMaxSize(32, 32);
+        backButton.setTooltip(new Tooltip("Rewind"));
+
+        backButton.setOnAction((ActionEvent e) -> {
+            mediaPlayer.seek(mediaPlayer.getCurrentTime().divide(1.2));
+        });
+        backButton.setOnMouseEntered(e -> {
+            backButton.setStyle("-fx-graphic: url('if_Rewind_2001873.png'); \n" + "-fx-background-color: #000777");
+        });
+        backButton.setOnMouseExited(e -> {
+            backButton.setStyle("-fx-graphic: url('if_Rewind_2001873.png'); \n" + "-fx-background-color: #80ced6");
+        });
+    }
+
+    //add forward button
+    void addForwardButton() {
+        forwardButton = new Button();
+        forwardButton.setMaxSize(32, 32);
         forwardButton.setStyle("-fx-graphic: url('if_Fast_Forward_2001867.png'); \n" + "-fx-background-color: #80ced6");
-        filesButton.setMaxSize(32,32);
+        forwardButton.setTooltip(new Tooltip("Forward"));
+
+        forwardButton.setOnAction((ActionEvent e) -> {
+            mediaPlayer.seek(mediaPlayer.getCurrentTime().multiply(1.2));
+        });
+        forwardButton.setOnMouseEntered(e -> {
+            forwardButton.setStyle("-fx-graphic: url('if_Fast_Forward_2001867.png'); \n" + "-fx-background-color: #000777");
+        });
+        forwardButton.setOnMouseExited(e -> {
+            forwardButton.setStyle("-fx-graphic: url('if_Fast_Forward_2001867.png'); \n" + "-fx-background-color: #80ced6");
+        });
+    }
+
+    //add files button
+    void addFilesButton() {
+        filesButton = new Button();
+        filesButton.setMaxSize(32, 32);
         filesButton.setStyle("-fx-graphic: url('if_open-file_85334.png'); \n" + "-fx-background-color: #80ced6");
-        volbtn=new Button();
-        volbtn.setMaxSize(32,32);
+        filesButton.setTooltip(new Tooltip("Open New File"));
+
+        filesButton.setOnAction((ActionEvent e) -> {
+            chooseFile(1);
+        });
+        filesButton.setOnMouseEntered(e -> {
+            filesButton.setStyle("-fx-graphic: url('if_open-file_85334.png'); \n" + "-fx-background-color: #000777");
+        });
+        filesButton.setOnMouseExited(e -> {
+            filesButton.setStyle("-fx-graphic: url('if_open-file_85334.png'); \n" + "-fx-background-color: #80ced6");
+        });
+    }
+
+    //add vol button
+    void addVolButton() {
+        volbtn = new Button();
+        volbtn.setMaxSize(32, 32);
         volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
-        MediaProp=new Button();
+        volbtn.setTooltip(new Tooltip("Volume"));
+
+        volbtn.setOnMouseEntered(e -> {
+            if (flag % 2 == 1)
+                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #000777");
+            else
+                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #000777");
+        });
+        volbtn.setOnMouseExited(e -> {
+            if (flag % 2 == 1)
+                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #80ced6");
+            else
+                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
+        });
+
+        volbtn.setOnAction((ActionEvent e) -> {
+            flag++;
+            if (flag % 2 == 1) {
+                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #80ced6");
+                prev = volumeSlider.getValue();
+                volbtn.setTooltip(new Tooltip("Mute"));
+                mediaPlayer.setVolume(0);
+                volumeSlider.setValue(0);
+                vollabel.setText("Vol:" + Integer.toString((int) (0)) + "%");
+
+            } else {
+                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
+                volbtn.setTooltip(new Tooltip("Volume"));
+                mediaPlayer.setVolume(prev / 100.0);
+                volumeSlider.setValue(prev);
+                vollabel.setText("Vol:" + Integer.toString((int) (prev)) + "%");
+            }
+
+        });
+
+        //vol label
+        vollabel=new Label();
+        vollabel.setFont(Font.font("Comic Sans", FontWeight.BOLD, 15));
+        vollabel.setMaxHeight(100);
+        vollabel.setLabelFor(volumeSlider);
+        vollabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
+    }
+
+    //add Media Prop button
+    void addMediaPropButton() {
+        MediaProp = new Button();
         MediaProp.setTooltip(new Tooltip("Details"));
-        MediaProp.setMaxSize(32,32);
+        MediaProp.setMaxSize(32, 32);
         MediaProp.setStyle("-fx-graphic: url('if_stock_view-details_24335.png'); \n" + "-fx-background-color: #80ced6");
-        speed=new Label("Speed: ");
+
+        //media prop alert box
+        MediaProp.setOnAction((ActionEvent e) -> {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setHeaderText("Details");
+            a.setContentText(fileName);
+            a.setTitle("Properties");
+            a.showAndWait();
+
+        });
+        MediaProp.setOnMouseEntered(e -> {
+            MediaProp.setStyle("-fx-graphic: url('if_stock_view-details_24335.png'); \n" + "-fx-background-color: #000777");
+        });
+        MediaProp.setOnMouseExited(e -> {
+            MediaProp.setStyle("-fx-graphic: url('if_stock_view-details_24335.png'); \n" + "-fx-background-color: #80ced6");
+        });
+    }
+
+    //add volume Slider
+    void addVolumeSlider() {
         volumeSlider = new Slider();
         volumeSlider.setPrefWidth(120);
         volumeSlider.setMaxWidth(300);
         volumeSlider.setMinWidth(10);
+        volumeSlider.setMaxHeight(100);
         volumeSlider.setValue(50);
         mediaPlayer.setVolume(volumeSlider.getValue());
         volumeSlider.valueProperty().addListener((Observable ov) -> {
@@ -299,23 +486,28 @@ public class MainMediaPlayer extends Application implements MouseListener
                 mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
                 vollabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
             }
-            if(volumeSlider.isPressed()) {
-                mediaPlayer.setVolume(volumeSlider.getValue()/100.0);
+            if (volumeSlider.isPressed()) {
+                mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
                 vollabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
             }
-            if(volumeSlider.getValue()==0) {
+            if (volumeSlider.getValue() == 0) {
                 volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #80ced6");
                 volbtn.setTooltip(new Tooltip("Mute"));
                 vollabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
-            }
-            else {
+            } else {
                 volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
                 volbtn.setTooltip(new Tooltip("Volume"));
                 vollabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
             }
         });
+    }
+
+    //add time slider
+    void addTimeSlider() {
         time = new Label();
         time.setPrefWidth(80);
+        time.setMaxHeight(100);
+        time.setFont(Font.font("Comic Sans", FontWeight.BOLD, 12));
 
         mediaPlayer.currentTimeProperty().addListener((Observable ov) -> {
             currentTime = mediaPlayer.getCurrentTime();
@@ -327,14 +519,17 @@ public class MainMediaPlayer extends Application implements MouseListener
             currentTime = mediaPlayer.getCurrentTime();
             updateValues(currentTime);
         });
+
+        //time slider
         timeSlider = new Slider();
-        HBox.setHgrow(timeSlider,Priority.ALWAYS);
+        HBox.setHgrow(timeSlider, Priority.ALWAYS);
         timeSlider.setMinWidth(10);
-        timeSlider.setMaxWidth(8*Double.SIZE);
+        timeSlider.setMaxWidth(8 * Double.SIZE);
+        timeSlider.setMaxHeight(100);
         mediaPlayer.currentTimeProperty().addListener((obs, oldTime, newTime) -> {
-        if (!timeSlider.isValueChanging()) {
-            timeSlider.setValue(newTime.toSeconds());
-        }
+            if (!timeSlider.isValueChanging()) {
+                timeSlider.setValue(newTime.toSeconds());
+            }
         });
         timeSlider.valueProperty().addListener((Observable ov) -> {
             if (timeSlider.isValueChanging()) {
@@ -342,202 +537,65 @@ public class MainMediaPlayer extends Application implements MouseListener
                 mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
                 currentTime = Duration.seconds(timeSlider.getValue());
             }
-            if(timeSlider.isPressed())
-            {
+            if (timeSlider.isPressed()) {
                 mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
                 currentTime = Duration.seconds(timeSlider.getValue());
             }
         });
+    }
+
+    //add speed slider
+    void addSpeedSlider() {
         speedSlider = new Slider();
         HBox.setHgrow(speedSlider, Priority.ALWAYS);
         speedSlider.setMinWidth(10);
         speedSlider.setMaxWidth(100);
         speedSlider.setPrefWidth(70);
+        speedSlider.setMaxHeight(100);
         speedSlider.setValue(50);
         speedSlider.valueProperty().addListener((Observable ov) -> {
             if (speedSlider.isValueChanging() || speedSlider.isPressed()) {
-                double rate = speedSlider.getValue()/10;
-                if(rate<1)
+                double rate = speedSlider.getValue() / 10;
+                if (rate < 1)
                     rate = 0.5;
-                else if(rate < 2)
+                else if (rate < 2)
                     rate = 0.6;
-                else if(rate < 3)
+                else if (rate < 3)
                     rate = 0.7;
-                else if(rate < 4)
+                else if (rate < 4)
                     rate = 0.8;
-                else if(rate < 5)
+                else if (rate < 5)
                     rate = 0.9;
-                else if(rate < 6)
+                else if (rate < 6)
                     rate = 1;
-                else if(rate < 7)
+                else if (rate < 7)
                     rate = 1.1;
-                else if(rate < 8)
+                else if (rate < 8)
                     rate = 1.2;
-                else if(rate < 9)
+                else if (rate < 9)
                     rate = 1.3;
                 else
                     rate = 1.4;
                 mediaPlayer.setRate(rate);
             }
         });
-        speedSlider.setMaxHeight(100);
-        volumeSlider.setMaxHeight(100);
-        timeSlider.setMaxHeight(100);
+    }
+
+    //add speed button and label
+    void addSpeedButton() {
+        speed = new Label("Speed: ");
         speed.setMaxHeight(100);
-        time.setMaxHeight(100);
-        time.setFont(Font.font("Comic Sans", FontWeight.BOLD,12));
-        filesButton.setTooltip(new Tooltip("Open New File"));
-        startButton.setTooltip(new Tooltip("Replay"));
-        backButton.setTooltip(new Tooltip("Rewind"));
-        playButton.setTooltip(new Tooltip("Pause"));
-        //pauseButton.setTooltip(new Tooltip("Pause"));
-        forwardButton.setTooltip(new Tooltip("Forward"));
-        volbtn.setTooltip(new Tooltip("Volume"));
-        speedButton=new Button();
+
+        speedButton = new Button();
         speedButton.setText("Speed:");
         speedButton.setMaxSize(70, 40);
         speedButton.setStyle("-fx-background-color: #80ced6");
 
         speedButton.setTooltip(new Tooltip("Default Speed"));
-        speedButton.setOnAction((ActionEvent e)-> {
+        speedButton.setOnAction((ActionEvent e) -> {
             mediaPlayer.setRate(1);
             speedSlider.setValue(50.0);
         });
-
-
-        vollabel=new Label();
-
-        vollabel.setFont(Font.font("Comic Sans", FontWeight.BOLD, 15));
-        vollabel.setMaxHeight(100);
-        vollabel.setLabelFor(volumeSlider);
-        vollabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
-        playButton.setOnMouseEntered(e -> {
-           if (playButtonCount%2==0) {
-               playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #000777");
-           }
-           else {
-               playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #000777");
-           }
-        });
-        playButton.setOnMouseExited(e -> {
-           if (playButtonCount%2==0) {
-               playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
-           }
-           else {
-               playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
-           }
-        });
-        playButton.setOnAction((ActionEvent e) -> {
-           playButtonCount++;
-           if (playButtonCount%2==1) {
-               playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
-               playButton.setTooltip(new Tooltip("Play"));
-               mediaPlayer.pause();
-           }
-           else {
-               playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
-               playButton.setTooltip(new Tooltip("Pause"));
-               mediaPlayer.play();
-           }
-        });
-
-        /*pauseButton.setOnAction((ActionEvent e) -> {
-            mediaPlayer.pause();
-        });*/
-
-        startButton.setOnAction((ActionEvent e)-> {
-            mediaPlayer.seek(Duration.ZERO);
-        });
-        startButton.setOnMouseEntered(e -> {
-           startButton.setStyle("-fx-graphic: url('if_Replay.png'); \n" + "-fx-background-color: #000777");
-        });
-        startButton.setOnMouseExited(e -> {
-           startButton.setStyle("-fx-graphic: url('if_Replay.png'); \n" + "-fx-background-color: #80ced6");
-        });
-
-        backButton.setOnAction((ActionEvent e) -> {
-            mediaPlayer.seek(mediaPlayer.getCurrentTime().divide(1.2));
-        });
-        backButton.setOnMouseEntered(e -> {
-           backButton.setStyle("-fx-graphic: url('if_Rewind_2001873.png'); \n" + "-fx-background-color: #000777");
-        });
-        backButton.setOnMouseExited(e -> {
-           backButton.setStyle("-fx-graphic: url('if_Rewind_2001873.png'); \n" + "-fx-background-color: #80ced6");
-        });
-
-        forwardButton.setOnAction((ActionEvent e) -> {
-            mediaPlayer.seek(mediaPlayer.getCurrentTime().multiply(1.2));
-        });
-        forwardButton.setOnMouseEntered(e -> {
-           forwardButton.setStyle("-fx-graphic: url('if_Fast_Forward_2001867.png'); \n" + "-fx-background-color: #000777");
-        });
-        forwardButton.setOnMouseExited(e -> {
-           forwardButton.setStyle("-fx-graphic: url('if_Fast_Forward_2001867.png'); \n" + "-fx-background-color: #80ced6");
-        });
-
-        //*************************** Alert box ******************************
-        MediaProp.setOnAction((ActionEvent e) -> {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setHeaderText("Details");
-                a.setContentText(fileName);
-                a.setTitle("Properties");
-                a.showAndWait();
-        });
-        MediaProp.setOnMouseEntered(e -> {
-           MediaProp.setStyle("-fx-graphic: url('if_stock_view-details_24335.png'); \n" + "-fx-background-color: #000777");
-        });
-        MediaProp.setOnMouseExited(e -> {
-           MediaProp.setStyle("-fx-graphic: url('if_stock_view-details_24335.png'); \n" + "-fx-background-color: #80ced6");
-        });
-
-        volbtn.setOnAction((ActionEvent e) -> {
-            flag++;
-            if (flag%2==1) {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #80ced6");
-                prev=volumeSlider.getValue();
-                volbtn.setTooltip(new Tooltip("Mute"));
-                mediaPlayer.setVolume(0);
-                volumeSlider.setValue(0);
-                vollabel.setText("Vol:" + Integer.toString((int) (0)) + "%");
-            }
-            else {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
-                volbtn.setTooltip(new Tooltip("Volume"));
-                mediaPlayer.setVolume(prev/100.0);
-                volumeSlider.setValue(prev);
-                vollabel.setText("Vol:" + Integer.toString((int) (prev)) + "%");
-            }
-        });
-
-        volbtn.setOnMouseEntered(e -> {
-            if (flag%2==1) {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #000777");
-            }
-            else {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #000777");
-            }
-        });
-
-        volbtn.setOnMouseExited(e -> {
-            if(flag%2==1) {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #80ced6");
-            }
-            else {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
-            }
-        });
-
-        filesButton.setOnAction((ActionEvent e) -> {
-            chooseFile(1);
-        });
-        filesButton.setOnMouseEntered(e -> {
-            filesButton.setStyle("-fx-graphic: url('if_open-file_85334.png'); \n" + "-fx-background-color: #000777");
-        });
-        filesButton.setOnMouseExited(e -> {
-            filesButton.setStyle("-fx-graphic: url('if_open-file_85334.png'); \n" + "-fx-background-color: #80ced6");
-        });
-        toolBar.getChildren().addAll(filesButton,speedButton,speedSlider,startButton,backButton,playButton,forwardButton,time,timeSlider,volbtn,volumeSlider,vollabel,MediaProp);
-        return toolBar;
     }
 
     void chooseFile(int prev)
