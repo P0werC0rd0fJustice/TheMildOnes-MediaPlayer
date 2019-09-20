@@ -21,8 +21,8 @@
          <Label id="timeLabel" fx:id="timeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="104.0" text="0:00" />
          <Slider id="timeSlider" fx:id="timeSlider" prefHeight="14.0" prefWidth="131.0" />
          <Button id="volumeButton" fx:id="volumeButton" mnemonicParsing="false" onAction="#handleVolumeButtonAction" />
-         <Slider id="volumeSlider" fx:id="volumeSlider" prefHeight="14.0" prefWidth="61.0" />
-            <Label id="volumeLabel" fx:id="volumeLabel" text="Vol:" />
+         <Slider id="volumeSlider" fx:id="volumeSlider" prefHeight="14.0" prefWidth="61.0" value="50.0" />
+            <Label id="volumeLabel" fx:id="volumeLabel" text="Vol:50%" />
          <Button id="infoButton" fx:id="infoButton" mnemonicParsing="false" onAction="#handleInfoButtonAction" />
       </children>
    </HBox>

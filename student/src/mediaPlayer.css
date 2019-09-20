@@ -41,7 +41,7 @@ Button:hover {
 }
 
 #volumeButton {
-    -fx-graphic: url('if_Volume_Mute_2001875.png');
+    -fx-graphic: url('if_Volume_Max_2001874.png');
 }
 
 #infoButton {
@@ -58,4 +58,5 @@ Button:hover {
 
 #volumeLabel {
     -fx-font-size: 15;
+    -fx-font-weight: Bold;
 }
