@@ -1,0 +1,48 @@
+
+BorderPane {
+    -fx-background-color: black;
+}
+
+Button {
+    -fx-background-color: #80ced6
+}
+
+Button:hover {
+    -fx-background-color: #000777
+}
+
+#playButton {
+    -fx-graphic: url('if_Pause_2001889.png');
+}
+
+#startButton {
+    -fx-graphic: url('if_Replay.png');
+}
+
+#backButton {
+    -fx-graphic: url('if_Rewind_2001873.png');
+}
+
+#forwardButton {
+    -fx-graphic: url('if_Fast_Forward_2001867.png');
+}
+
+#filesButton {
+    -fx-graphic: url('if_open-file_85334.png');
+}
+
+#volumeButton {
+    -fx-graphic: url('if_Volume_Mute_2001875.png');
+}
+
+#infoButton {
+    -fx-graphic: url('if_stock_view-details_24335.png');
+}
+
+#timeLabel {
+    -fx-font-weight: bold;
+}
+
+#speedButton {
+
+}

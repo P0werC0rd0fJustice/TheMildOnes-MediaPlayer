@@ -7,16 +7,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="40.0" BorderPane.alignment="CENTER">
+      <HBox id="hbox" alignment="CENTER" prefHeight="40.0" spacing="5.0" style="-fx-background-color: #555555;" BorderPane.alignment="CENTER">
          <children>
-            <Button id="playButton" mnemonicParsing="false" onAction="#handlePlayButtonAction" text="Play" />
+            <Button id="filesButton" fx:id="filesButton" mnemonicParsing="false" onAction="#handleFileButtonAction" text="File" />
+            <Button id="speedButton" fx:id="speedButton" mnemonicParsing="false" onAction="#handleSpeedButtonAction" text="Speed" />
+            <Slider id="speedSlider" fx:id="speedSlider" prefHeight="14.0" prefWidth="99.0" />
+            <Button id="backButton" fx:id="backButton" mnemonicParsing="false" onAction="#handleBackButtonAction" />
+            <Button id="startButton" fx:id="startButton" mnemonicParsing="false" onAction="#handleStartButtonAction" />
+            <Button id="playButton" fx:id="playButton" mnemonicParsing="false" onAction="#handlePlayButtonAction" />
+            <Button id="forwardButton" fx:id="forwardButton" mnemonicParsing="false" onAction="#handleForwardButtonAction" />
+            <Label id="timeLabel" fx:id="timeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="48.0" text="0:00" />
+            <Slider id="timeSlider" fx:id="timeSlider" prefHeight="14.0" prefWidth="214.0" />
+            <Button id="volumeButton" fx:id="volumeButton" mnemonicParsing="false" onAction="#handleVolumeButtonAction" />
+            <Slider id="volumeSlider" fx:id="volumeSlider" prefHeight="14.0" prefWidth="61.0" />
+            <Button id="infoButton" fx:id="infoButton" mnemonicParsing="false" onAction="#handleInfoButtonAction" />
          </children>
       </HBox>
    </bottom>
    <center>
-      <MediaView fitHeight="200.0" fitWidth="200.0" BorderPane.alignment="CENTER" />
+      <MediaView id="mediaView" fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

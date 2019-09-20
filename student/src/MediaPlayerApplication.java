@@ -11,7 +11,7 @@ public class MediaPlayerApplication extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("mediaPlayer.fxml"));
         primaryStage.setTitle("Mild Ones Media Player");
-        primaryStage.setScene(new Scene(root, 800, 500));
+        primaryStage.setScene(new Scene(root, 1200, 700));
         primaryStage.show();
     }
 
