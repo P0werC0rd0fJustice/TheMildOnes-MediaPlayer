@@ -668,10 +668,10 @@ public class MainMediaPlayer extends Application implements MouseListener
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         //Startframe startfr = new Startframe();
         launch(args);
-    }
+    }*/
 
     @Override
     public void mouseClicked(MouseEvent e) {
