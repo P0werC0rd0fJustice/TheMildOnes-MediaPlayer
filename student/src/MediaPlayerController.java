@@ -77,6 +77,7 @@ public class MediaPlayerController
     {
         System.out.println(playButton);
 
+        //set tooltips
         playButton.setTooltip(new Tooltip("Play"));
         startButton.setTooltip(new Tooltip("Replay"));
         backButton.setTooltip(new Tooltip("Rewind"));
@@ -86,71 +87,12 @@ public class MediaPlayerController
         infoButton.setTooltip(new Tooltip("Details"));
         speedButton.setTooltip(new Tooltip("Default Speed"));
 
-
-       volumeSlider.valueProperty().addListener((Observable ov) -> {
-            if (volumeSlider.isValueChanging()) {
-                mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
-                volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
-            }
-            if (volumeSlider.isPressed()) {
-                mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
-                volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
-            }
-            if (volumeSlider.getValue() == 0) {
-                volumeButton.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png');");
-                volumeButton.setTooltip(new Tooltip("Mute"));
-                volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
-            } else {
-                volumeButton.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png');");
-                volumeButton.setTooltip(new Tooltip("Volume"));
-                volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
-            }
-        });
-
-
+        //TODO: replace this with layout tricks
         HBox.setHgrow(timeSlider, Priority.ALWAYS);
 
-
-
-        timeSlider.valueProperty().addListener((Observable ov) -> {
-            if (timeSlider.isValueChanging()) {
-                //System.out.println(timeSlider.getValue());
-                mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
-                currentTime = Duration.seconds(timeSlider.getValue());
-            }
-            if (timeSlider.isPressed()) {
-                mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
-                currentTime = Duration.seconds(timeSlider.getValue());
-            }
-        });
-
-
-        speedSlider.valueProperty().addListener((Observable ov) -> {
-            if (speedSlider.isValueChanging() || speedSlider.isPressed()) {
-                double rate = speedSlider.getValue() / 10;
-                if (rate < 1)
-                    rate = 0.5;
-                else if (rate < 2)
-                    rate = 0.6;
-                else if (rate < 3)
-                    rate = 0.7;
-                else if (rate < 4)
-                    rate = 0.8;
-                else if (rate < 5)
-                    rate = 0.9;
-                else if (rate < 6)
-                    rate = 1;
-                else if (rate < 7)
-                    rate = 1.1;
-                else if (rate < 8)
-                    rate = 1.2;
-                else if (rate < 9)
-                    rate = 1.3;
-                else
-                    rate = 1.4;
-                mediaPlayer.setRate(rate);
-            }
-        });
+        volumeSlider.valueProperty().addListener((Observable ov) -> onVolumeSliderChange(ov));
+        timeSlider.valueProperty().addListener((Observable ov) -> onTimeSliderChange(ov));
+        speedSlider.valueProperty().addListener((Observable ov) -> onSpeedSliderChange(ov));
 
     }
 
@@ -233,6 +175,71 @@ public class MediaPlayerController
     }
 
 
+    void onVolumeSliderChange(Observable ov)
+    {
+        if (volumeSlider.isValueChanging()) {
+            mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
+            volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
+        }
+        if (volumeSlider.isPressed()) {
+            mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
+            volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
+        }
+        if (volumeSlider.getValue() == 0) {
+            volumeButton.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png');");
+            volumeButton.setTooltip(new Tooltip("Mute"));
+            volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
+        } else {
+            volumeButton.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png');");
+            volumeButton.setTooltip(new Tooltip("Volume"));
+            volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
+        }
+    }
+
+    void onTimeSliderChange(Observable ov)
+    {
+        if (timeSlider.isValueChanging()) {
+            //System.out.println(timeSlider.getValue());
+            mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
+            currentTime = Duration.seconds(timeSlider.getValue());
+        }
+        if (timeSlider.isPressed()) {
+            mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
+            currentTime = Duration.seconds(timeSlider.getValue());
+        }
+
+    }
+
+    void onSpeedSliderChange(Observable ov)
+    {
+        if (speedSlider.isValueChanging() || speedSlider.isPressed()) {
+            double rate = speedSlider.getValue() / 10;
+            if (rate < 1)
+                rate = 0.5;
+            else if (rate < 2)
+                rate = 0.6;
+            else if (rate < 3)
+                rate = 0.7;
+            else if (rate < 4)
+                rate = 0.8;
+            else if (rate < 5)
+                rate = 0.9;
+            else if (rate < 6)
+                rate = 1;
+            else if (rate < 7)
+                rate = 1.1;
+            else if (rate < 8)
+                rate = 1.2;
+            else if (rate < 9)
+                rate = 1.3;
+            else
+                rate = 1.4;
+            mediaPlayer.setRate(rate);
+        }
+
+    }
+
+
     void chooseFile(int prev)
     {
         try {
@@ -279,6 +286,7 @@ public class MediaPlayerController
                 addMediaPlayerListeners();
 
                 if (flag2==1) {
+                    System.out.println("here");
                     mediaView = new MediaView(mediaPlayer);
                     mediaView.setFitWidth(1200);
                     mediaView.setFitHeight(600);

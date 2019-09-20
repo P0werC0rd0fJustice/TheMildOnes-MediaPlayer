@@ -1,14 +1,23 @@
 
 BorderPane {
     -fx-background-color: black;
+    /*-fx-background-image: url('573012.png');
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1400 800;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+}
+
+HBox {
+    -fx-background-color: #80ced6;
 }
 
 Button {
-    -fx-background-color: #80ced6
+    -fx-background-color: #80ced6;
 }
 
 Button:hover {
-    -fx-background-color: #000777
+    -fx-background-color: #000777;
 }
 
 #playButton {
@@ -45,4 +54,8 @@ Button:hover {
 
 #speedButton {
 
+}
+
+#volumeLabel {
+    -fx-font-size: 15;
 }
