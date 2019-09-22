@@ -1,0 +1,62 @@
+
+BorderPane {
+    -fx-background-color: black;
+    /*-fx-background-image: url('573012.png');
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1400 800;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+}
+
+HBox {
+    -fx-background-color: #80ced6;
+}
+
+Button {
+    -fx-background-color: #80ced6;
+}
+
+Button:hover {
+    -fx-background-color: #000777;
+}
+
+#playButton {
+    -fx-graphic: url('if_Pause_2001889.png');
+}
+
+#startButton {
+    -fx-graphic: url('if_Replay.png');
+}
+
+#backButton {
+    -fx-graphic: url('if_Rewind_2001873.png');
+}
+
+#forwardButton {
+    -fx-graphic: url('if_Fast_Forward_2001867.png');
+}
+
+#filesButton {
+    -fx-graphic: url('if_open-file_85334.png');
+}
+
+#volumeButton {
+    -fx-graphic: url('if_Volume_Max_2001874.png');
+}
+
+#infoButton {
+    -fx-graphic: url('if_stock_view-details_24335.png');
+}
+
+#timeLabel {
+    -fx-font-weight: bold;
+}
+
+#speedButton {
+
+}
+
+#volumeLabel {
+    -fx-font-size: 15;
+    -fx-font-weight: Bold;
+}
