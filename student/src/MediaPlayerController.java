@@ -256,7 +256,7 @@ public class MediaPlayerController
             Date d = new Date(file.lastModified());
             fileName = "Name: " + (String)file.getName() + "\nPath: " + path + "\nSize: " + fileSize+"MB\n Last Modified: "+d.toString();
 
-            if (file.getName().substring(file.getName().length()-3,file.getName().length()).compareTo("mp3")!=0 && file.getName().substring(file.getName().length()-3,file.getName().length()).compareTo("flv")!=0 && file.getName().substring(file.getName().length()-3,file.getName().length()).compareTo("mp4")!=0 && file.getName().substring(file.getName().length()-4,file.getName().length()).compareTo("mpeg")!=0) {
+            if (!FileInfo.supportedFile(file.getName())) {
                 Alert err = new Alert(Alert.AlertType.ERROR);
                 err.setTitle("ERROR!");
                 err.setHeaderText("Not Supported");
