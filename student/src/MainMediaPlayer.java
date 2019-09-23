@@ -1,4 +1,6 @@
 import java.awt.Toolkit;
+
+import com.sun.javafx.property.adapter.PropertyDescriptor;
 import javafx.scene.image.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -72,6 +74,24 @@ public class MainMediaPlayer extends Application implements MouseListener
 
         //detect keys pressed
         mainScene.setOnKeyPressed(event -> onKeyPressed(event));
+
+        //Scene size change?
+        mainScene.widthProperty().addListener((obs, old, ne) -> {
+            try {
+                widthPropertyChanged(obs, old, ne);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        mainScene.heightProperty().addListener((obs, old, ne) -> {
+            try {
+                heightPropertyChanged(obs, old, ne);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+
     }
 
     //creates the main javafx scene and configures the stage to accomodate it
@@ -239,6 +259,32 @@ public class MainMediaPlayer extends Application implements MouseListener
         }
         if(ke.getCode()==KeyCode.C) {
             chooseFile(1);
+        }
+    }
+
+    void widthPropertyChanged(Observable ob, Number old, Number ne) throws FileNotFoundException {
+        if(mediaPlayer.getStatus() != null){
+            mediaView = new MediaView(mediaPlayer);
+            mediaView.setFitWidth((Double) ne);
+            mediaView.setFitHeight(borderPane.getHeight());
+            mediaView.autosize();
+            mediaView.setEffect(dropshadow);
+            borderPane.setCenter(mediaView);
+            borderPane.setBottom(addToolBar());
+            borderPane.setStyle("-fx-background-color: Black");
+        }
+    }
+
+    void heightPropertyChanged(Observable ob, Number old, Number ne) throws FileNotFoundException {
+        if(mediaPlayer.getStatus() != null){
+            mediaView = new MediaView(mediaPlayer);
+            mediaView.setFitWidth(borderPane.getWidth());
+            mediaView.setFitHeight((Double) ne);
+            mediaView.autosize();
+            mediaView.setEffect(dropshadow);
+            borderPane.setCenter(mediaView);
+            borderPane.setBottom(addToolBar());
+            borderPane.setStyle("-fx-background-color: Black");
         }
     }
 
