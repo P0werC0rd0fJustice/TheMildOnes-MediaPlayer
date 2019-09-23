@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Platform.runLater;
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -526,6 +527,10 @@ public class MainMediaPlayer extends Application implements MouseListener
         timeSlider.setMinWidth(10);
         timeSlider.setMaxWidth(8 * Double.SIZE);
         timeSlider.setMaxHeight(100);
+        timeSlider.maxProperty().bind(Bindings.createDoubleBinding(
+    		() -> mediaPlayer.getTotalDuration().toSeconds(),
+    		mediaPlayer.totalDurationProperty()));
+
         mediaPlayer.currentTimeProperty().addListener((obs, oldTime, newTime) -> {
             if (!timeSlider.isValueChanging()) {
                 timeSlider.setValue(newTime.toSeconds());
