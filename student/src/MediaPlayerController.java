@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -210,6 +211,16 @@ public class MediaPlayerController
 
     }
 
+    void onSceneScroll(ScrollEvent event)
+    {
+        volumeSlider.setValueChanging(true);
+        double deltaY = event.getDeltaY();
+        double prev = volumeSlider.getValue();
+
+        volumeSlider.setValue(prev + (deltaY/20));
+    }
+
+
     void onSpeedSliderChange(Observable ov)
     {
         if (speedSlider.isValueChanging() || speedSlider.isPressed()) {
@@ -331,6 +342,8 @@ public class MediaPlayerController
                 timeSlider.setValue(newTime.toSeconds());
             }
         });
+
+        mediaView.setOnScroll(e -> onSceneScroll(e));
     }
 
 }
