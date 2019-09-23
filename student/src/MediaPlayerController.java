@@ -204,6 +204,7 @@ public class MediaPlayerController
         double prev = volumeSlider.getValue();
 
         volumeSlider.setValue(prev + (deltaY/20));
+        
     }
 
     void onTimeSliderChange(Observable ov)
