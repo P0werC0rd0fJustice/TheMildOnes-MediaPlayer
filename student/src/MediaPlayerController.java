@@ -1,5 +1,6 @@
 
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -94,6 +95,8 @@ public class MediaPlayerController
         volumeSlider.valueProperty().addListener((Observable ov) -> onVolumeSliderChange(ov));
         timeSlider.valueProperty().addListener((Observable ov) -> onTimeSliderChange(ov));
         speedSlider.valueProperty().addListener((Observable ov) -> onSpeedSliderChange(ov));
+
+
 
     }
 
@@ -344,6 +347,10 @@ public class MediaPlayerController
         });
 
         mediaView.setOnScroll(e -> onSceneScroll(e));
+
+        timeSlider.maxProperty().bind(Bindings.createDoubleBinding(
+                () -> mediaPlayer.getTotalDuration().toSeconds(),
+                mediaPlayer.totalDurationProperty()));
     }
 
 }
