@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -196,16 +197,25 @@ public class MediaPlayerController
         }
     }
 
+    void onSceneScroll(ScrollEvent event)
+    {
+        volumeSlider.setValueChanging(true);
+        double deltaY = event.getDeltaY();
+        double prev = volumeSlider.getValue();
+
+        volumeSlider.setValue(prev + (deltaY/20));
+    }
+
     void onTimeSliderChange(Observable ov)
     {
         if (timeSlider.isValueChanging()) {
             //System.out.println(timeSlider.getValue());
-            mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
-            currentTime = Duration.seconds(timeSlider.getValue());
+            mediaPlayer.seek(duration.seconds(timeSlider.getValue()/100.0));
+            currentTime = duration.seconds(timeSlider.getValue());
         }
         if (timeSlider.isPressed()) {
-            mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
-            currentTime = Duration.seconds(timeSlider.getValue());
+            mediaPlayer.seek(duration.seconds(timeSlider.getValue()));
+            currentTime = duration.seconds(timeSlider.getValue());
         }
 
     }
@@ -331,6 +341,8 @@ public class MediaPlayerController
                 timeSlider.setValue(newTime.toSeconds());
             }
         });
+
+        mediaView.setOnScroll(e -> onSceneScroll(e));
     }
 
 }
