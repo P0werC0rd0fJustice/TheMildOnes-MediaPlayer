@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController">
+<BorderPane id="borderPane" fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController">
 <bottom>
-   <HBox id="hbox" alignment="CENTER" prefHeight="40.0" spacing="5.0" BorderPane.alignment="CENTER">
+   <HBox id="toolBarHBox" fx:id="toolBarHBox" alignment="CENTER" minWidth="0.0" prefHeight="40.0" spacing="5.0" BorderPane.alignment="CENTER">
       <children>
          <Button id="filesButton" fx:id="filesButton" mnemonicParsing="false" onAction="#handleFileButtonAction" text="File" />
          <Button id="speedButton" fx:id="speedButton" mnemonicParsing="false" onAction="#handleSpeedButtonAction" text="Speed" />
@@ -19,7 +19,7 @@
          <Button id="playButton" fx:id="playButton" mnemonicParsing="false" onAction="#handlePlayButtonAction" />
          <Button id="forwardButton" fx:id="forwardButton" mnemonicParsing="false" onAction="#handleForwardButtonAction" />
          <Label id="timeLabel" fx:id="timeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="104.0" text="0:00" />
-         <Slider id="timeSlider" fx:id="timeSlider" prefHeight="14.0" prefWidth="131.0" />
+         <Slider id="timeSlider" fx:id="timeSlider" prefHeight="14.0" prefWidth="131.0" HBox.hgrow="ALWAYS"/>
          <Button id="volumeButton" fx:id="volumeButton" mnemonicParsing="false" onAction="#handleVolumeButtonAction" />
          <Slider id="volumeSlider" fx:id="volumeSlider" prefHeight="14.0" prefWidth="61.0" value="50.0" />
             <Label id="volumeLabel" fx:id="volumeLabel" text="Vol:50%" />
@@ -28,6 +28,6 @@
    </HBox>
 </bottom>
 <center>
-   <MediaView id="mediaView" fitHeight="${borderPane.height}" fitWidth="${borderPane.width}" fx:id="mediaView" BorderPane.alignment="CENTER"/>
+   <MediaView id="mediaView" fx:id="mediaView" BorderPane.alignment="CENTER"/>
 </center>
 </BorderPane>
