@@ -5,6 +5,7 @@ public class FileList
 {
     private File directory;
     private File curFile;
+    private int curFileIndex;
     private ArrayList<File> supportedFiles;
 
     public FileList(File curFile)
@@ -12,10 +13,14 @@ public class FileList
         this.curFile = curFile;
         directory = curFile.getParentFile();
         supportedFiles = new ArrayList<>();
+
+        populateSupportedFilesList();
+
+        curFileIndex = supportedFiles.indexOf(curFile);
     }
 
 
-    private void getSupportedFiles()
+    private void populateSupportedFilesList()
     {
         for(final File fileEntry : directory.listFiles())
         {
@@ -28,6 +33,20 @@ public class FileList
 
     }
 
+    public ArrayList<File> getSupportedFiles()
+    {
+        return supportedFiles;
+    }
+
+
+    public File getNextSupportedFile()
+    {
+        curFileIndex++;
+        if(curFileIndex >= supportedFiles.size())
+            curFileIndex = 0;
+
+        return supportedFiles.get(curFileIndex);
+    }
 
 
 }
