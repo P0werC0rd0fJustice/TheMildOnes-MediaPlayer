@@ -2,6 +2,8 @@
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import java.io.File;
+
 public class FileTests {
 
 
@@ -20,4 +22,25 @@ public class FileTests {
         boolean supported = FileInfo.supportedFile(fileName);
         assertFalse(supported);
     }
+
+    @Test
+    public void givenFile_returnNextFile()
+    {
+        System.out.println("test");
+        final File folder = new File("student");
+        listFilesForFolder(folder);
+        assertTrue(true);
+    }
+
+    public void listFilesForFolder(final File folder) {
+        for (final File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory()) {
+                //listFilesForFolder(fileEntry);
+            } else {
+                System.out.println(fileEntry.getName());
+            }
+        }
+    }
+
+
 }
