@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -73,6 +75,7 @@ public class MediaPlayerController
     int playButtonCount = 0;
     int fullScreenClick=1;
 
+    FileList fileList;
 
     @FXML
     public void initialize()
@@ -258,17 +261,15 @@ public class MediaPlayerController
     {
         try {
             playButtonCount = 0;
-            int flag2=1;
             fc = new FileChooser();
             //fc.getExtensionFilters().add(new ExtensionFilter("*.flv", "*.mp4", "*.mpeg","*.mp3","*.mkv"));
             File file = fc.showOpenDialog(null);
             if(file==null) return;
-            String path = file.getAbsolutePath();
-            path = path.replace("\\", "/");
+
             Double std = (double) file.length() / (1024*1024); //File size in MB
             String fileSize = String.format("%.2f", std);
             Date d = new Date(file.lastModified());
-            fileName = "Name: " + (String)file.getName() + "\nPath: " + path + "\nSize: " + fileSize+"MB\n Last Modified: "+d.toString();
+            fileName = "Name: " + (String)file.getName() + "\nPath: " + getPath(file) + "\nSize: " + fileSize+"MB\n Last Modified: "+d.toString();
 
             if (!FileInfo.supportedFile(file.getName())) {
                 Alert err = new Alert(Alert.AlertType.ERROR);
@@ -278,44 +279,61 @@ public class MediaPlayerController
                 err.showAndWait();
             }
             else {
-                if (file.getName().substring(file.getName().length()-3,file.getName().length()).compareTo("mp3")==0) {
-                    flag2=0;
-                    ImageView img2=new ImageView();
-                    img2.setImage(image);
-                    img2.setFitWidth(1200);
-                    img2.setFitHeight(600);
-                    img2.autosize();
-                    img2.setEffect(dropshadow);
-                    //borderPane.setCenter(img2);
-                }
-                media = new Media(new File(path).toURI().toString());
-
-                if (prev == 1) {
-                    //mediaPlayer.stop();
-                }
-                mediaPlayer = new MediaPlayer(media);
-                System.out.println(mediaPlayer + " " + mediaView);
-                mediaView.setMediaPlayer(mediaPlayer);
-                mediaPlayer.setAutoPlay(true);
-                addMediaPlayerListeners();
-
-                if (flag2==1) {
-                    System.out.println("here");
-                    mediaView = new MediaView(mediaPlayer);
-                    mediaView.setFitWidth(1200);
-                    mediaView.setFitHeight(600);
-                    mediaView.autosize();
-                    mediaView.setEffect(dropshadow);
-                    //borderPane.setCenter(mediaView);
-                }
-               // borderPane.setBottom(addToolBar());
-               // borderPane.setStyle("-fx-background-color: Black");
+                displayFile(file);
+                //fileList = new FileList(file);
             }
         } catch (Exception ex) {
             Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    //opens the file in the mediaplayer
+    void displayFile(File file)
+    {
+        String path = getPath(file);
+        int flag2=1;
+        if (file.getName().substring(file.getName().length()-3,file.getName().length()).compareTo("mp3")==0) {
+            flag2=0;
+            ImageView img2=new ImageView();
+            img2.setImage(image);
+            img2.setFitWidth(1200);
+            img2.setFitHeight(600);
+            img2.autosize();
+            img2.setEffect(dropshadow);
+            //borderPane.setCenter(img2);
+        }
+        media = new Media(new File(path).toURI().toString());
+
+        if (prev == 1) {
+            //mediaPlayer.stop();
+        }
+        mediaPlayer = new MediaPlayer(media);
+        System.out.println(mediaPlayer + " " + mediaView);
+        mediaView.setMediaPlayer(mediaPlayer);
+        mediaPlayer.setAutoPlay(true);
+        addMediaPlayerListeners();
+
+        if (flag2==1) {
+            mediaView = new MediaView(mediaPlayer);
+            mediaView.setFitWidth(1200);
+            mediaView.setFitHeight(600);
+            mediaView.autosize();
+            mediaView.setEffect(dropshadow);
+            //borderPane.setCenter(mediaView);
+        }
+        // borderPane.setBottom(addToolBar());
+        // borderPane.setStyle("-fx-background-color: Black");
+
+    }
+
+
+    public String getPath(File file)
+    {
+        String path = file.getAbsolutePath();
+        path = path.replace("\\", "/");
+
+        return path;
+    }
 
     Duration currentTime;
     protected void updateValues(Duration currentTime) {
@@ -351,6 +369,17 @@ public class MediaPlayerController
         timeSlider.maxProperty().bind(Bindings.createDoubleBinding(
                 () -> mediaPlayer.getTotalDuration().toSeconds(),
                 mediaPlayer.totalDurationProperty()));
+    }
+
+
+    @FXML
+    private void handleOnKeyPressed(KeyEvent event)
+    {
+        if (event.getCode().equals(KeyCode.N))
+        {
+            displayFile(fileList.getNextSupportedFile());
+        }
+
     }
 
 }
