@@ -280,7 +280,7 @@ public class MediaPlayerController
             }
             else {
                 displayFile(file);
-                //fileList = new FileList(file);
+                fileList = new FileList(file);
             }
         } catch (Exception ex) {
             Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -305,7 +305,7 @@ public class MediaPlayerController
         media = new Media(new File(path).toURI().toString());
 
         if (prev == 1) {
-            //mediaPlayer.stop();
+           // mediaPlayer.stop();
         }
         mediaPlayer = new MediaPlayer(media);
         System.out.println(mediaPlayer + " " + mediaView);
@@ -313,16 +313,6 @@ public class MediaPlayerController
         mediaPlayer.setAutoPlay(true);
         addMediaPlayerListeners();
 
-        if (flag2==1) {
-            mediaView = new MediaView(mediaPlayer);
-            mediaView.setFitWidth(1200);
-            mediaView.setFitHeight(600);
-            mediaView.autosize();
-            mediaView.setEffect(dropshadow);
-            //borderPane.setCenter(mediaView);
-        }
-        // borderPane.setBottom(addToolBar());
-        // borderPane.setStyle("-fx-background-color: Black");
 
     }
 
@@ -375,6 +365,7 @@ public class MediaPlayerController
     @FXML
     private void handleOnKeyPressed(KeyEvent event)
     {
+        //play the next file when N is pressed
         if (event.getCode().equals(KeyCode.N))
         {
             displayFile(fileList.getNextSupportedFile());
