@@ -138,11 +138,11 @@ public class MediaPlayerController
     {
         playButtonCount++;
         if (playButtonCount % 2 == 1) {
-            playButton.setStyle("-fx-graphic: url('if_Play_2001879.png');");
+            playButton.setStyle("-fx-graphic: url('playbutton.png');");
             playButton.setTooltip(new Tooltip("Play"));
             mediaPlayer.pause();
         } else {
-            playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png');");
+            playButton.setStyle("-fx-graphic: url('pausebutton.png');");
             playButton.setTooltip(new Tooltip("Pause"));
             mediaPlayer.play();
         }
@@ -177,7 +177,7 @@ public class MediaPlayerController
     {
         flag++;
         if (flag % 2 == 1) {
-            volumeButton.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png');");
+            volumeButton.setStyle("-fx-graphic: url('volumemutebutton.png');");
             prev = volumeSlider.getValue();
             volumeButton.setTooltip(new Tooltip("Mute"));
             mediaPlayer.setVolume(0);
@@ -185,7 +185,7 @@ public class MediaPlayerController
             volumeLabel.setText("Vol:" + Integer.toString((int) (0)) + "%");
 
         } else {
-            volumeButton.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png');");
+            volumeButton.setStyle("-fx-graphic: url('volumemaxbutton.png');");
             volumeButton.setTooltip(new Tooltip("Volume"));
             mediaPlayer.setVolume(prev / 100.0);
             volumeSlider.setValue(prev);
@@ -222,11 +222,11 @@ public class MediaPlayerController
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         }
         if (volumeSlider.getValue() == 0) {
-            volumeButton.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png');");
+            volumeButton.setStyle("-fx-graphic: url('volumemutebutton.png');");
             volumeButton.setTooltip(new Tooltip("Mute"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         } else {
-            volumeButton.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png');");
+            volumeButton.setStyle("-fx-graphic: url('volumemaxbutton.png');");
             volumeButton.setTooltip(new Tooltip("Volume"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         }

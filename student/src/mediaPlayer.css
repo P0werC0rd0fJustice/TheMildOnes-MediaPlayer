@@ -1,4 +1,3 @@
-
 BorderPane {
     -fx-background-color: black;
     /*-fx-background-image: url('573012.png');
@@ -9,7 +8,7 @@ BorderPane {
 }
 
 HBox {
-    -fx-background-color: #80ced6;
+    -fx-background-color: #000;
 }
 
 Button {
@@ -21,31 +20,31 @@ Button:hover {
 }
 
 #playButton {
-    -fx-graphic: url('if_Pause_2001889.png');
+    -fx-background-image: url('playbutton.png');
 }
 
 #startButton {
-    -fx-graphic: url('if_Replay.png');
+    -fx-background-image: url('replaybutton.png');
 }
 
 #backButton {
-    -fx-graphic: url('if_Rewind_2001873.png');
+    -fx-background-image: url('rewindbutton.png');
 }
 
 #forwardButton {
-    -fx-graphic: url('if_Fast_Forward_2001867.png');
+    -fx-background-image: url('ffbutton.png');
 }
 
 #filesButton {
-    -fx-graphic: url('if_open-file_85334.png');
+    -fx-background-image: url('filebutton.png');
 }
 
 #volumeButton {
-    -fx-graphic: url('if_Volume_Max_2001874.png');
+    -fx-background-image: url('volumemaxbutton.png');
 }
 
 #infoButton {
-    -fx-graphic: url('if_stock_view-details_24335.png');
+    -fx-background-image: url('infobutton.png');
 }
 
 #timeLabel {
@@ -59,4 +58,4 @@ Button:hover {
 #volumeLabel {
     -fx-font-size: 15;
     -fx-font-weight: Bold;
-}
+} 
