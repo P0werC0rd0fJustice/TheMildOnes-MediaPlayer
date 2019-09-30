@@ -19,6 +19,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 //import javafx.fxml.Initializable;
 
@@ -79,6 +80,10 @@ public class MediaPlayerController
     int fullScreenClick=1;
 
     FileList fileList;
+
+    Stage primaryStage;
+
+    boolean isFullScreen = false;
 
     @FXML
     public void initialize()
@@ -400,6 +405,23 @@ public class MediaPlayerController
             displayFile(fileList.getNextSupportedFile());
         }
 
+        if(event.getCode()==KeyCode.F){
+            toggleFullScreen(primaryStage);
+        }
+
+    }
+
+    void toggleFullScreen(Stage primaryStage){
+        if (!primaryStage.isFullScreen()){
+            primaryStage.setFullScreen(true);
+        }
+        else primaryStage.setFullScreen(false);
+    }
+
+
+    public void setStage(Stage stage)
+    {
+        primaryStage = stage;
     }
 
 }

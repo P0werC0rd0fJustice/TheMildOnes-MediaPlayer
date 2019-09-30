@@ -10,12 +10,17 @@ public class MediaPlayerApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("mediaPlayer.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mediaPlayer.fxml"));
+        Parent root = (Parent)fxmlLoader.load();
+        //FXMLLoader.load(getClass().getResource("mediaPlayer.fxml"));
+        MediaPlayerController controller = (MediaPlayerController)fxmlLoader.getController();
         primaryStage.setTitle("Mild Ones Media Player");
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.getIcons().add(new Image("media_player_icon_by_xylomon.png"));
         primaryStage.setMinWidth(700.0);
         primaryStage.show();
+
+        controller.setStage(primaryStage);
     }
 
 
