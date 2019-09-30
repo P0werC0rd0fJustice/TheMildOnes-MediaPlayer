@@ -55,6 +55,9 @@ public class MediaPlayerController
     @FXML
     BorderPane borderPane;
 
+    @FXML
+    HBox hBox;
+
     Duration duration;
     int flag=0;
     double prev;
@@ -103,6 +106,29 @@ public class MediaPlayerController
 
     }
 
+    @FXML
+    protected void onSizeChange()
+    {
+        if(hBox.getWidth() <= 950 ){
+            hBox.setSpacing(0);
+            speedButton.setManaged(false);
+            speedButton.setVisible(false);
+            filesButton.setText("");
+            volumeLabel.setScaleX(0);
+            volumeLabel.setScaleY(0.);
+            volumeLabel.setManaged(false);
+        }
+        else{
+            hBox.setSpacing(5);
+            speedButton.setManaged(true);
+            speedButton.setVisible(true);
+            filesButton.setText("File");
+            volumeLabel.setScaleX(1);
+            volumeLabel.setScaleY(1);
+            volumeLabel.setManaged(true);
+        }
+
+    }
 
     @FXML
     protected void handlePlayButtonAction(ActionEvent event)

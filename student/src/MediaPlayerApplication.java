@@ -14,6 +14,7 @@ public class MediaPlayerApplication extends Application {
         primaryStage.setTitle("Mild Ones Media Player");
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.getIcons().add(new Image("media_player_icon_by_xylomon.png"));
+        primaryStage.setMinWidth(700.0);
         primaryStage.show();
     }
 
