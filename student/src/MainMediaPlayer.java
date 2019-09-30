@@ -1,5 +1,4 @@
 import java.awt.Toolkit;
-
 import com.sun.javafx.property.adapter.PropertyDescriptor;
 import javafx.scene.image.Image;
 import java.awt.event.MouseEvent;
@@ -11,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Platform.runLater;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -56,6 +56,7 @@ public class MainMediaPlayer extends Application implements MouseListener
     Image cur = new Image("cursor.png");
     int playButtonCount = 0;
     int fullScreenClick=1;
+    boolean isFullScreen = false;
 
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException
@@ -74,7 +75,7 @@ public class MainMediaPlayer extends Application implements MouseListener
         borderPane.setOnMouseClicked(event -> onSceneClicked(event, primaryStage));
 
         //detect keys pressed
-        mainScene.setOnKeyPressed(event -> onKeyPressed(event));
+        mainScene.setOnKeyPressed(event -> onKeyPressed(event, primaryStage));
 
         //Scene size change?
         mainScene.widthProperty().addListener((obs, old, ne) -> {
@@ -243,7 +244,7 @@ public class MainMediaPlayer extends Application implements MouseListener
     }
 
     //handles key presses
-    void onKeyPressed(KeyEvent ke)
+    void onKeyPressed(KeyEvent ke, Stage primaryStage)
     {
         if(ke.getCode()==KeyCode.ALT) {
             playButtonCount++;
@@ -261,8 +262,16 @@ public class MainMediaPlayer extends Application implements MouseListener
         if(ke.getCode()==KeyCode.C) {
             chooseFile(1);
         }
+	if(ke.getCode()==KeyCode.F){
+	    toggleFullScreen(primaryStage);	
+	}
     }
-
+    void toggleFullScreen(Stage primaryStage){
+	if (!primaryStage.isFullScreen()){
+		primaryStage.setFullScreen(true);
+		}
+	else primaryStage.setFullScreen(false);
+	}
     void widthPropertyChanged(Observable ob, Number old, Number ne) throws FileNotFoundException {
         if(mediaPlayer.getStatus() != null){
             mediaView = new MediaView(mediaPlayer);
