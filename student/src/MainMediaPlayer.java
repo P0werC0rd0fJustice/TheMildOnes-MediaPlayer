@@ -1,4 +1,6 @@
 import java.awt.Toolkit;
+
+import com.sun.javafx.property.adapter.PropertyDescriptor;
 import javafx.scene.image.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -72,6 +74,24 @@ public class MainMediaPlayer extends Application implements MouseListener
 
         //detect keys pressed
         mainScene.setOnKeyPressed(event -> onKeyPressed(event));
+
+        //Scene size change?
+        mainScene.widthProperty().addListener((obs, old, ne) -> {
+            try {
+                widthPropertyChanged(obs, old, ne);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        mainScene.heightProperty().addListener((obs, old, ne) -> {
+            try {
+                heightPropertyChanged(obs, old, ne);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+
+
     }
 
     //creates the main javafx scene and configures the stage to accomodate it
@@ -208,12 +228,12 @@ public class MainMediaPlayer extends Application implements MouseListener
             {
                 playButtonCount++;
                 if (playButtonCount%2==1) {
-                    playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
+                    playButton.setStyle("-fx-graphic: url('playbutton.png'); \n" + "-fx-background-color: #000");
                     playButton.setTooltip(new Tooltip("Play"));
                     mediaPlayer.pause();
                 }
                 else {
-                    playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+                    playButton.setStyle("-fx-graphic: url('pausebutton.png'); \n" + "-fx-background-color: #000");
                     playButton.setTooltip(new Tooltip("Pause"));
                     mediaPlayer.play();
                 }
@@ -227,18 +247,44 @@ public class MainMediaPlayer extends Application implements MouseListener
         if(ke.getCode()==KeyCode.ALT) {
             playButtonCount++;
             if (playButtonCount%2==1) {
-                playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setStyle("-fx-graphic: url('playbutton.png'); \n" + "-fx-background-color: #000");
                 playButton.setTooltip(new Tooltip("Play"));
                 mediaPlayer.pause();
             }
             else {
-                playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setStyle("-fx-graphic: url('pausebutton.png'); \n" + "-fx-background-color: #000");
                 playButton.setTooltip(new Tooltip("Pause"));
                 mediaPlayer.play();
             }
         }
         if(ke.getCode()==KeyCode.C) {
             chooseFile(1);
+        }
+    }
+
+    void widthPropertyChanged(Observable ob, Number old, Number ne) throws FileNotFoundException {
+        if(mediaPlayer.getStatus() != null){
+            mediaView = new MediaView(mediaPlayer);
+            mediaView.setFitWidth((Double) ne);
+            mediaView.setFitHeight(borderPane.getHeight());
+            mediaView.autosize();
+            mediaView.setEffect(dropshadow);
+            borderPane.setCenter(mediaView);
+            borderPane.setBottom(addToolBar());
+            borderPane.setStyle("-fx-background-color: Black");
+        }
+    }
+
+    void heightPropertyChanged(Observable ob, Number old, Number ne) throws FileNotFoundException {
+        if(mediaPlayer.getStatus() != null){
+            mediaView = new MediaView(mediaPlayer);
+            mediaView.setFitWidth(borderPane.getWidth());
+            mediaView.setFitHeight((Double) ne);
+            mediaView.autosize();
+            mediaView.setEffect(dropshadow);
+            borderPane.setCenter(mediaView);
+            borderPane.setBottom(addToolBar());
+            borderPane.setStyle("-fx-background-color: Black");
         }
     }
 
@@ -258,7 +304,7 @@ public class MainMediaPlayer extends Application implements MouseListener
         toolBar.setAlignment(Pos.BOTTOM_LEFT);
         toolBar.alignmentProperty().isBound();
         toolBar.setSpacing(5);
-        toolBar.setStyle("-fx-background-color: #80ced6");
+        toolBar.setStyle("-fx-background-color: #000");
 
         //add Buttons and Sliders
         addPlayButton();
@@ -295,30 +341,30 @@ public class MainMediaPlayer extends Application implements MouseListener
     void addPlayButton() {
         playButton = new Button();
         playButton.setMaxSize(32, 32);
-        playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+        playButton.setStyle("-fx-graphic: url('pausebutton.png'); \n" + "-fx-background-color: #000");
         playButton.setMaxSize(32, 32);
         playButton.setTooltip(new Tooltip("Pause"));
 
         playButton.setOnMouseEntered(e -> {
             if (playButtonCount % 2 == 0)
-                playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #000777");
+                playButton.setStyle("-fx-graphic: url('pausebutton.png'); \n" + "-fx-background-color: #000");
             else
-                playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #000777");
+                playButton.setStyle("-fx-graphic: url('playbutton.png'); \n" + "-fx-background-color: #000");
         });
         playButton.setOnMouseExited(e -> {
             if (playButtonCount % 2 == 0)
-                playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setStyle("-fx-graphic: url('pausebutton.png'); \n" + "-fx-background-color: #000");
             else
-                playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setStyle("-fx-graphic: url('playbutton.png'); \n" + "-fx-background-color: #000");
         });
         playButton.setOnAction((ActionEvent e) -> {
             playButtonCount++;
             if (playButtonCount % 2 == 1) {
-                playButton.setStyle("-fx-graphic: url('if_Play_2001879.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setStyle("-fx-graphic: url('playbutton.png'); \n" + "-fx-background-color: #000");
                 playButton.setTooltip(new Tooltip("Play"));
                 mediaPlayer.pause();
             } else {
-                playButton.setStyle("-fx-graphic: url('if_Pause_2001889.png'); \n" + "-fx-background-color: #80ced6");
+                playButton.setStyle("-fx-graphic: url('pausebutton.png'); \n" + "-fx-background-color: #000");
                 playButton.setTooltip(new Tooltip("Pause"));
                 mediaPlayer.play();
             }
@@ -404,26 +450,26 @@ public class MainMediaPlayer extends Application implements MouseListener
     void addVolButton() {
         volbtn = new Button();
         volbtn.setMaxSize(32, 32);
-        volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
+        volbtn.setStyle("-fx-graphic: url('volumemaxbutton.png'); \n" + "-fx-background-color: #000");
         volbtn.setTooltip(new Tooltip("Volume"));
 
         volbtn.setOnMouseEntered(e -> {
             if (flag % 2 == 1)
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #000777");
+                volbtn.setStyle("-fx-graphic: url('volumemutebutton.png'); \n" + "-fx-background-color: #000");
             else
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #000777");
+                volbtn.setStyle("-fx-graphic: url('volumemaxbutton.png'); \n" + "-fx-background-color: #000");
         });
         volbtn.setOnMouseExited(e -> {
             if (flag % 2 == 1)
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #80ced6");
+                volbtn.setStyle("-fx-graphic: url('volumemutebutton.png'); \n" + "-fx-background-color: #000");
             else
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
+                volbtn.setStyle("-fx-graphic: url('volumemaxbutton.png'); \n" + "-fx-background-color: #000");
         });
 
         volbtn.setOnAction((ActionEvent e) -> {
             flag++;
             if (flag % 2 == 1) {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #80ced6");
+                volbtn.setStyle("-fx-graphic: url('volumemutebutton.png'); \n" + "-fx-background-color: #000");
                 prev = volumeSlider.getValue();
                 volbtn.setTooltip(new Tooltip("Mute"));
                 mediaPlayer.setVolume(0);
@@ -431,7 +477,7 @@ public class MainMediaPlayer extends Application implements MouseListener
                 vollabel.setText("Vol:" + Integer.toString((int) (0)) + "%");
 
             } else {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
+                volbtn.setStyle("-fx-graphic: url('volumemaxbutton.png'); \n" + "-fx-background-color: #000");
                 volbtn.setTooltip(new Tooltip("Volume"));
                 mediaPlayer.setVolume(prev / 100.0);
                 volumeSlider.setValue(prev);
@@ -491,11 +537,11 @@ public class MainMediaPlayer extends Application implements MouseListener
                 vollabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
             }
             if (volumeSlider.getValue() == 0) {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Mute_2001875.png'); \n" + "-fx-background-color: #80ced6");
+                volbtn.setStyle("-fx-graphic: url('volumemutebutton.png'); \n" + "-fx-background-color: #000");
                 volbtn.setTooltip(new Tooltip("Mute"));
                 vollabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
             } else {
-                volbtn.setStyle("-fx-graphic: url('if_Volume_Max_2001874.png'); \n" + "-fx-background-color: #80ced6");
+                volbtn.setStyle("-fx-graphic: url('volumemaxbutton.png'); \n" + "-fx-background-color: #000");
                 volbtn.setTooltip(new Tooltip("Volume"));
                 vollabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
             }
@@ -668,10 +714,10 @@ public class MainMediaPlayer extends Application implements MouseListener
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         //Startframe startfr = new Startframe();
         launch(args);
-    }
+    }*/
 
     @Override
     public void mouseClicked(MouseEvent e) {
