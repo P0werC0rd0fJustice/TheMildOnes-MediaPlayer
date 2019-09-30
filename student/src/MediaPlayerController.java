@@ -102,6 +102,9 @@ public class MediaPlayerController
         timeSlider.valueProperty().addListener((Observable ov) -> onTimeSliderChange(ov));
         speedSlider.valueProperty().addListener((Observable ov) -> onSpeedSliderChange(ov));
 
+        mediaView.fitWidthProperty().bind(borderPane.widthProperty());
+        mediaView.fitHeightProperty().bind(borderPane.heightProperty().subtract(40));
+       // hBox.prefWidthProperty().bind(borderPane.widthProperty());
 
 
     }

@@ -7,7 +7,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id = "borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0" minWidth="0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController" onKeyPressed="#handleOnKeyPressed" onMouseEntered="#onSizeChange">
+
+<BorderPane id="borderPane" fx:id = "borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0" minWidth="0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController" onKeyPressed="#handleOnKeyPressed" onMouseEntered="#onSizeChange">
 <bottom>
    <HBox fx:id="hBox" alignment="CENTER" prefHeight="40.0" spacing="5.0" BorderPane.alignment="CENTER">
       <children>
@@ -19,7 +20,7 @@
          <Button id="playButton" fx:id="playButton" mnemonicParsing="false" onAction="#handlePlayButtonAction" />
          <Button id="forwardButton" fx:id="forwardButton" mnemonicParsing="false" onAction="#handleForwardButtonAction" />
          <Label id="timeLabel" fx:id="timeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="104.0" text="0:00" />
-         <Slider id="timeSlider" fx:id="timeSlider" prefHeight="14.0" prefWidth="131.0" />
+         <Slider id="timeSlider" fx:id="timeSlider" prefHeight="14.0" prefWidth="131.0" HBox.hgrow="ALWAYS"/>
          <Button id="volumeButton" fx:id="volumeButton" mnemonicParsing="false" onAction="#handleVolumeButtonAction" />
          <Slider id="volumeSlider" fx:id="volumeSlider" prefHeight="14.0" prefWidth="61.0" value="50.0" />
          <Label id="volumeLabel" fx:id="volumeLabel" text="Vol:50%" />
@@ -28,6 +29,6 @@
    </HBox>
 </bottom>
 <center>
-   <MediaView id="mediaView" fx:id="mediaView" fitHeight="600.0" fitWidth="1200.0" BorderPane.alignment="CENTER" />
+   <MediaView id="mediaView" fx:id="mediaView" BorderPane.alignment="CENTER"/>
 </center>
 </BorderPane>
