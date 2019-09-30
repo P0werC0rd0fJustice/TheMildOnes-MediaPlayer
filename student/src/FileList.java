@@ -48,5 +48,9 @@ public class FileList
         return supportedFiles.get(curFileIndex);
     }
 
+    public int getSupportedFileCount()
+    {
+        return supportedFiles.size();
+    }
 
 }

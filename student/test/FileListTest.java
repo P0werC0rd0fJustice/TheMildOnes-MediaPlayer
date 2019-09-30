@@ -9,16 +9,13 @@ import org.junit.Test;
 public class FileListTest
 {
     @Test
-    public void givenFile_returnNextFile()
+    public void getNumberSupportedFileCount_threeSupportedFiles_returnThree()
     {
         FileList fl = new FileList(new File("student/test/videos/vid1.mp4"));
 
-        ArrayList<File> files = fl.getSupportedFiles();
-        for(File f : files)
-        {
-            System.out.println(f.getName());
-        }
-        assertTrue(true);
+        int numSupported = fl.getSupportedFileCount();
+
+        assertEquals(numSupported, 3);
     }
 
     @Test
