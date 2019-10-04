@@ -405,6 +405,12 @@ public class MediaPlayerController
             displayFile(fileList.getNextSupportedFile());
         }
 
+        if(event.getCode().isDigitKey())
+        {
+            Duration dur = NumberKeyNavigation.getTimeFromKey(event.getCode(), mediaPlayer.getTotalDuration());
+            mediaPlayer.seek(dur);
+        }
+
         if(event.getCode()==KeyCode.F){
             toggleFullScreen(primaryStage);
         }
