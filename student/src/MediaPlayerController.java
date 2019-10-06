@@ -74,7 +74,6 @@ public class MediaPlayerController
     //BorderPane borderPane;
     Button enterButton = new Button();
     String fileName="";
-    Toolkit tk = Toolkit.getDefaultToolkit();
     Image cur = new Image("cursor.png");
     int playButtonCount = 0;
     int fullScreenClick=1;
