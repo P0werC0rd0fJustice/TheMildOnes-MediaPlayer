@@ -1,5 +1,5 @@
 import java.awt.Toolkit;
-import com.sun.javafx.property.adapter.PropertyDescriptor;
+
 import javafx.scene.image.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -10,11 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Platform.runLater;
-import javafx.beans.property.DoubleProperty;
+
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -53,7 +52,7 @@ public class MainMediaPlayer extends Application implements MouseListener
     Button enterButton = new Button();
     String fileName="";
     Toolkit tk = Toolkit.getDefaultToolkit();
-    Image cur = new Image("cursor.png");
+    Image cur = new Image("uiImages/cursor.png");
     int playButtonCount = 0;
     int fullScreenClick=1;
     boolean isFullScreen = false;
@@ -61,7 +60,7 @@ public class MainMediaPlayer extends Application implements MouseListener
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException
     {
-        primaryStage.getIcons().add(new Image("media_player_icon_by_xylomon.png"));
+        primaryStage.getIcons().add(new Image("windowImages/media_player_icon_by_xylomon.png"));
 
         Scene mainScene = setUpScene(primaryStage);
         primaryStage.show();
@@ -100,7 +99,7 @@ public class MainMediaPlayer extends Application implements MouseListener
     Scene setUpScene(Stage primaryStage)
     {
         ImageView img = new ImageView();
-        image = new Image("572703.png");
+        image = new Image("oldUiImages/572703.png");
         img.setImage(image);
         dropshadow = new DropShadow();
         dropshadow.setOffsetY(5.0);
@@ -725,9 +724,6 @@ public class MainMediaPlayer extends Application implements MouseListener
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
    /* public static void main(String[] args) {
         //Startframe startfr = new Startframe();
         launch(args);
