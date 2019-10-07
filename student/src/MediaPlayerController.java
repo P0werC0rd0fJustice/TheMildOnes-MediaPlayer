@@ -314,7 +314,7 @@ public class MediaPlayerController
                 fileList = new FileList(file);
             }
         } catch (Exception ex) {
-            Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -342,6 +342,8 @@ public class MediaPlayerController
         System.out.println(mediaPlayer + " " + mediaView);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
+        playButton.setStyle("-fx-background-image: url('pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+        playButton.setTooltip(new Tooltip("Pause"));
         addMediaPlayerListeners();
 
 
