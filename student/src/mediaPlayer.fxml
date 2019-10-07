@@ -12,7 +12,7 @@
 <bottom>
    <HBox fx:id="hBox" alignment="CENTER" prefHeight="40.0" spacing="5.0" BorderPane.alignment="CENTER">
       <children>
-          <Button id="filesButton" fx:id="filesButton" mnemonicParsing="false" onAction="#handleFileButtonAction" prefHeight="38.0" prefWidth="114.0" style="-fx-background-size: 30px; -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000;">
+          <Button id="filesButton" fx:id="filesButton" mnemonicParsing="false" onAction="#handleFileButtonAction" prefHeight="38.0" prefWidth="60" style="-fx-background-size: 30px; -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000;">
               <cursor>
                   <Cursor fx:constant="HAND" />
               </cursor></Button>
@@ -26,7 +26,7 @@
               <cursor>
                   <Cursor fx:constant="HAND" />
               </cursor></Button>
-          <Button id="playButton" fx:id="playButton" mnemonicParsing="false" onAction="#handlePlayButtonAction" prefHeight="36.0" prefWidth="47.0" style="-fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-size: 30px; -fx-background-color: #000;">
+          <Button id="playButton" fx:id="playButton" mnemonicParsing="false" onAction="#handlePlayButtonAction" prefHeight="30" prefWidth="30" style="-fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000; -fx-background-size: cover, auto; ">
               <cursor>
                   <Cursor fx:constant="HAND" />
               </cursor></Button>
@@ -36,7 +36,7 @@
               </cursor></Button>
           <Label id="timeLabel" fx:id="timeLabel" alignment="CENTER" prefHeight="17.0" prefWidth="104.0" text="0:00" textFill="WHITE" />
           <Slider id="timeSlider" fx:id="timeSlider" prefHeight="14.0" prefWidth="131.0" />
-          <Button id="volumeButton" fx:id="volumeButton" mnemonicParsing="false" onAction="#handleVolumeButtonAction" prefHeight="37.0" prefWidth="32.0" style="-fx-background-size: 30px; -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000;">
+          <Button id="volumeButton" fx:id="volumeButton" mnemonicParsing="false" onAction="#handleVolumeButtonAction" prefHeight="30" prefWidth="30" style="-fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000; -fx-background-size: cover, auto;">
               <cursor>
                   <Cursor fx:constant="HAND" />
               </cursor></Button>

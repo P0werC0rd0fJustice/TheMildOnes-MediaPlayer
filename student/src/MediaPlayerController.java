@@ -120,7 +120,6 @@ public class MediaPlayerController
             hBox.setSpacing(0);
             speedButton.setManaged(false);
             speedButton.setVisible(false);
-            filesButton.setText("");
             volumeLabel.setScaleX(0);
             volumeLabel.setScaleY(0.);
             volumeLabel.setManaged(false);
@@ -129,7 +128,6 @@ public class MediaPlayerController
             hBox.setSpacing(5);
             speedButton.setManaged(true);
             speedButton.setVisible(true);
-            filesButton.setText("File");
             volumeLabel.setScaleX(1);
             volumeLabel.setScaleY(1);
             volumeLabel.setManaged(true);
@@ -142,11 +140,11 @@ public class MediaPlayerController
     {
         playButtonCount++;
         if (playButtonCount % 2 == 1) {
-            playButton.setStyle("-fx-graphic: url('playbutton.png');");
+            playButton.setStyle("-fx-background-image: url('playbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             playButton.setTooltip(new Tooltip("Play"));
             mediaPlayer.pause();
         } else {
-            playButton.setStyle("-fx-graphic: url('pausebutton.png');");
+            playButton.setStyle("-fx-background-image: url('pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             playButton.setTooltip(new Tooltip("Pause"));
             mediaPlayer.play();
         }
@@ -181,7 +179,7 @@ public class MediaPlayerController
     {
         flag++;
         if (flag % 2 == 1) {
-            volumeButton.setStyle("-fx-graphic: url('volumemutebutton.png');");
+            volumeButton.setStyle("-fx-background-image: url('volumemutebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             prev = volumeSlider.getValue();
             volumeButton.setTooltip(new Tooltip("Mute"));
             mediaPlayer.setVolume(0);
@@ -189,7 +187,7 @@ public class MediaPlayerController
             volumeLabel.setText("Vol:" + Integer.toString((int) (0)) + "%");
 
         } else {
-            volumeButton.setStyle("-fx-graphic: url('volumemaxbutton.png');");
+            volumeButton.setStyle("-fx-background-image: url('volumemaxbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             volumeButton.setTooltip(new Tooltip("Volume"));
             mediaPlayer.setVolume(prev / 100.0);
             volumeSlider.setValue(prev);
@@ -226,11 +224,11 @@ public class MediaPlayerController
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         }
         if (volumeSlider.getValue() == 0) {
-            volumeButton.setStyle("-fx-graphic: url('volumemutebutton.png');");
+            volumeButton.setStyle("-fx-background-image: url('volumemutebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             volumeButton.setTooltip(new Tooltip("Mute"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         } else {
-            volumeButton.setStyle("-fx-graphic: url('volumemaxbutton.png');");
+            volumeButton.setStyle("-fx-background-image: url('volumemaxbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             volumeButton.setTooltip(new Tooltip("Volume"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         }
