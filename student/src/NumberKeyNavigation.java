@@ -8,7 +8,7 @@ public class NumberKeyNavigation
     {
         //fraction of the video to check
         //top row keycodes 48 - 57 = 0 - 9
-        double fraction = (KeyCode.getCode() - 48) * .1;
+        double fraction = (keyCode.getCode() - 48) * .1;
 
         if(fraction < 0 || fraction > 1)
             return new Duration(0);
