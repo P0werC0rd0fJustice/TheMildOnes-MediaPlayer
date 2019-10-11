@@ -74,7 +74,7 @@ public class MediaPlayerController
     //BorderPane borderPane;
     Button enterButton = new Button();
     String fileName="";
-    Image cur = new Image("cursor.png");
+    Image cur = new Image("uiImages/cursor.png");
     int playButtonCount = 0;
     int fullScreenClick=1;
 
@@ -140,11 +140,11 @@ public class MediaPlayerController
     {
         playButtonCount++;
         if (playButtonCount % 2 == 1) {
-            playButton.setStyle("-fx-background-image: url('playbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+            playButton.setStyle("-fx-background-image: url('uiImages/playbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             playButton.setTooltip(new Tooltip("Play"));
             mediaPlayer.pause();
         } else {
-            playButton.setStyle("-fx-background-image: url('pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+            playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             playButton.setTooltip(new Tooltip("Pause"));
             mediaPlayer.play();
         }
@@ -179,7 +179,7 @@ public class MediaPlayerController
     {
         flag++;
         if (flag % 2 == 1) {
-            volumeButton.setStyle("-fx-background-image: url('volumemutebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+            volumeButton.setStyle("-fx-background-image: url('uiImages/volumemutebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             prev = volumeSlider.getValue();
             volumeButton.setTooltip(new Tooltip("Mute"));
             mediaPlayer.setVolume(0);
@@ -187,7 +187,7 @@ public class MediaPlayerController
             volumeLabel.setText("Vol:" + Integer.toString((int) (0)) + "%");
 
         } else {
-            volumeButton.setStyle("-fx-background-image: url('volumemaxbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+            volumeButton.setStyle("-fx-background-image: url('uiImages/volumemaxbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             volumeButton.setTooltip(new Tooltip("Volume"));
             mediaPlayer.setVolume(prev / 100.0);
             volumeSlider.setValue(prev);
@@ -224,11 +224,11 @@ public class MediaPlayerController
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         }
         if (volumeSlider.getValue() == 0) {
-            volumeButton.setStyle("-fx-background-image: url('volumemutebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+            volumeButton.setStyle("-fx-background-image: url('uiImages/volumemutebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             volumeButton.setTooltip(new Tooltip("Mute"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         } else {
-            volumeButton.setStyle("-fx-background-image: url('volumemaxbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+            volumeButton.setStyle("-fx-background-image: url('uiImages/volumemaxbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             volumeButton.setTooltip(new Tooltip("Volume"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         }
@@ -342,7 +342,7 @@ public class MediaPlayerController
         System.out.println(mediaPlayer + " " + mediaView);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
-        playButton.setStyle("-fx-background-image: url('pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+        playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
         playButton.setTooltip(new Tooltip("Pause"));
         addMediaPlayerListeners();
 

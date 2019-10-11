@@ -20,31 +20,31 @@ Button:hover {
 }
 
 #playButton {
-    -fx-background-image: url('playbutton.png');
+    -fx-background-image: url('uiImages/playbutton.png');
 }
 
 #startButton {
-    -fx-background-image: url('replaybutton.png');
+    -fx-background-image: url('uiImages/replaybutton.png');
 }
 
 #backButton {
-    -fx-background-image: url('rewindbutton.png');
+    -fx-background-image: url('uiImages/rewindbutton.png');
 }
 
 #forwardButton {
-    -fx-background-image: url('ffbutton.png');
+    -fx-background-image: url('uiImages/ffbutton.png');
 }
 
 #filesButton {
-    -fx-background-image: url('filebutton.png');
+    -fx-background-image: url('uiImages/filebutton.png');
 }
 
 #volumeButton {
-    -fx-background-image: url('volumemaxbutton.png');
+    -fx-background-image: url('uiImages/volumemaxbutton.png');
 }
 
 #infoButton {
-    -fx-background-image: url('infobutton.png');
+    -fx-background-image: url('uiImages/infobutton.png');
 }
 
 #timeLabel {
