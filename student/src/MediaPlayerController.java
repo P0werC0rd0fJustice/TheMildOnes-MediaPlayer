@@ -300,7 +300,8 @@ public class MediaPlayerController
             Double std = (double) file.length() / (1024*1024); //File size in MB
             String fileSize = String.format("%.2f", std);
             Date d = new Date(file.lastModified());
-            fileName = "Name: " + (String)file.getName() + "\nPath: " + getPath(file) + "\nSize: " + fileSize+"MB\n Last Modified: "+d.toString();
+            //fileName = "Name: " + (String)file.getName() + "\nPath: " + getPath(file) + "\nSize: " + fileSize+"MB\n Last Modified: "+d.toString();
+            fileName = FileInfo.fileInfoString(file);
 
             if (!FileInfo.supportedFile(file.getName())) {
                 Alert err = new Alert(Alert.AlertType.ERROR);
@@ -321,7 +322,7 @@ public class MediaPlayerController
     //opens the file in the mediaplayer
     void displayFile(File file)
     {
-        String path = getPath(file);
+        String path = FileInfo.getPath(file);
         int flag2=1;
         if (file.getName().substring(file.getName().length()-3,file.getName().length()).compareTo("mp3")==0) {
             flag2=0;
@@ -347,15 +348,6 @@ public class MediaPlayerController
         addMediaPlayerListeners();
 
 
-    }
-
-
-    public String getPath(File file)
-    {
-        String path = file.getAbsolutePath();
-        path = path.replace("\\", "/");
-
-        return path;
     }
 
     Duration currentTime;
