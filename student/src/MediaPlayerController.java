@@ -1,4 +1,5 @@
 
+import javafx.animation.PauseTransition;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -438,6 +440,17 @@ public class MediaPlayerController
 		}
 		displayNetworkStream(linkURL);	
 	}
+
+        if(event.getCode()==KeyCode.H) {
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+            pause.setOnFinished(e -> hBox.setVisible(false));
+            pause.play();
+            primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> hBox.setVisible(true));
+            primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> pause.playFromStart());
+
+        }
 
     }
 
