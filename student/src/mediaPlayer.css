@@ -58,4 +58,12 @@ Button:hover {
 #volumeLabel {
     -fx-font-size: 15;
     -fx-font-weight: Bold;
-} 
+}
+
+#fullscreenbutton {
+ -fx-background-image: url("fullscreen.png");
+ -fx-background-size: 30px;
+ -fx-background-repeat: no-repeat;
+ -fx-background-position: center;
+ -fx-background-color: #000;
+}
