@@ -21,6 +21,8 @@ public class MediaPlayerApplication extends Application {
         primaryStage.show();
 
         controller.setStage(primaryStage);
+
+
     }
 
 

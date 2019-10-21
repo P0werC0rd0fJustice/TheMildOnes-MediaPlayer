@@ -10,7 +10,7 @@
 
 <BorderPane id="borderPane" fx:id = "borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0" minWidth="0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController" onKeyPressed="#handleOnKeyPressed" onMouseEntered="#onSizeChange">
 <bottom>
-   <HBox fx:id="hBox" alignment="CENTER" prefHeight="40.0" spacing="5.0" BorderPane.alignment="CENTER">
+   <HBox fx:id="hBox" alignment="CENTER" prefHeight="40.0" spacing="5.0"  BorderPane.alignment="CENTER">
       <children>
           <Button id="filesButton" fx:id="filesButton" mnemonicParsing="false" onAction="#handleFileButtonAction" prefHeight="38.0" prefWidth="114.0" style="-fx-background-size: 30px; -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000;">
               <cursor>

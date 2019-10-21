@@ -22,6 +22,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 //import javafx.fxml.Initializable;
+import javafx.animation.*;
+import javafx.scene.input.MouseEvent;
 
 import java.awt.*;
 import java.io.File;
@@ -85,6 +87,7 @@ public class MediaPlayerController
 
     boolean isFullScreen = false;
 
+
     @FXML
     public void initialize()
     {
@@ -110,6 +113,7 @@ public class MediaPlayerController
         mediaView.fitWidthProperty().bind(borderPane.widthProperty());
         mediaView.fitHeightProperty().bind(borderPane.heightProperty().subtract(40));
        // hBox.prefWidthProperty().bind(borderPane.widthProperty());
+
 
 
     }
@@ -143,11 +147,11 @@ public class MediaPlayerController
     {
         playButtonCount++;
         if (playButtonCount % 2 == 1) {
-            playButton.setStyle("-fx-graphic: url('playbutton.png');");
+            playButton.setStyle("-fx-background-image: url('playbutton.png');");
             playButton.setTooltip(new Tooltip("Play"));
             mediaPlayer.pause();
         } else {
-            playButton.setStyle("-fx-graphic: url('pausebutton.png');");
+            playButton.setStyle("-fx-background-image: url('pausebutton.png');");
             playButton.setTooltip(new Tooltip("Pause"));
             mediaPlayer.play();
         }
@@ -182,7 +186,11 @@ public class MediaPlayerController
     {
         flag++;
         if (flag % 2 == 1) {
-            volumeButton.setStyle("-fx-graphic: url('volumemutebutton.png');");
+            volumeButton.setStyle("-fx-background-image: url('volumemutebutton.png')");
+            volumeButton.setStyle("-fx-background-size: 30px");
+            volumeButton.setStyle("-fx-background-repeat: no-repeat");
+            volumeButton.setStyle("-fx-background-color: #000");
+            volumeButton.setStyle("-fx-background-position: center");
             prev = volumeSlider.getValue();
             volumeButton.setTooltip(new Tooltip("Mute"));
             mediaPlayer.setVolume(0);
@@ -190,7 +198,11 @@ public class MediaPlayerController
             volumeLabel.setText("Vol:" + Integer.toString((int) (0)) + "%");
 
         } else {
-            volumeButton.setStyle("-fx-graphic: url('volumemaxbutton.png');");
+            volumeButton.setStyle("-fx-background-image: url('volumemaxbutton.png');");
+            volumeButton.setStyle("-fx-background-size: 30px");
+            volumeButton.setStyle("-fx-background-repeat: no-repeat");
+            volumeButton.setStyle("-fx-background-color: #000");
+            volumeButton.setStyle("-fx-background-position: center");
             volumeButton.setTooltip(new Tooltip("Volume"));
             mediaPlayer.setVolume(prev / 100.0);
             volumeSlider.setValue(prev);
@@ -227,11 +239,11 @@ public class MediaPlayerController
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         }
         if (volumeSlider.getValue() == 0) {
-            volumeButton.setStyle("-fx-graphic: url('volumemutebutton.png');");
+            volumeButton.setStyle("-fx-background-image: url('volumemutebutton.png');");
             volumeButton.setTooltip(new Tooltip("Mute"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         } else {
-            volumeButton.setStyle("-fx-graphic: url('volumemaxbutton.png');");
+            volumeButton.setStyle("-fx-background-image: url('volumemaxbutton.png');");
             volumeButton.setTooltip(new Tooltip("Volume"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
         }
@@ -409,6 +421,17 @@ public class MediaPlayerController
             toggleFullScreen(primaryStage);
         }
 
+        if(event.getCode()==KeyCode.H) {
+
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+            pause.setOnFinished(e -> hBox.setVisible(false));
+            pause.play();
+            primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> hBox.setVisible(true));
+            primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> pause.playFromStart());
+
+        }
+
     }
 
     void toggleFullScreen(Stage primaryStage){
@@ -417,6 +440,8 @@ public class MediaPlayerController
         }
         else primaryStage.setFullScreen(false);
     }
+
+
 
 
     public void setStage(Stage stage)
