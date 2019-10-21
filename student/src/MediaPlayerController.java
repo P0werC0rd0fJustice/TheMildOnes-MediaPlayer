@@ -20,6 +20,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import java.util.Optional;
 import javafx.util.Duration;
 //import javafx.fxml.Initializable;
 
@@ -349,7 +350,16 @@ public class MediaPlayerController
 
 
     }
+    void displayNetworkStream(String url){
+	media = new Media(url);
+	mediaPlayer = new MediaPlayer(media);
+	mediaView.setMediaPlayer(mediaPlayer);
+	mediaPlayer.setAutoPlay(true);
+        playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+        playButton.setTooltip(new Tooltip("Pause"));
+        addMediaPlayerListeners();
 
+	}
     Duration currentTime;
     protected void updateValues(Duration currentTime) {
         if (timeLabel != null) {
@@ -405,6 +415,19 @@ public class MediaPlayerController
         if(event.getCode()==KeyCode.F){
             toggleFullScreen(primaryStage);
         }
+	
+	if(event.getCode()==KeyCode.L){
+		TextInputDialog dialog = new TextInputDialog("HLS Stream Link");
+		dialog.setTitle("Open Network Stream");
+		dialog.setHeaderText("Open Network Stream");
+		dialog.setContentText("Enter network stream URL:");
+		Optional<String> result = dialog.showAndWait();
+		String linkURL = "";
+		if(result.isPresent()){
+			linkURL = result.get();
+		}
+		displayNetworkStream(linkURL);	
+	}
 
     }
 
