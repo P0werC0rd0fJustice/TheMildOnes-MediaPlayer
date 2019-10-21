@@ -76,6 +76,8 @@ public class MediaPlayerController
     String fileName="";
     Image cur = new Image("uiImages/cursor.png");
     int playButtonCount = 0;
+    int fileCount = 0;
+    String directory = "";
     int fullScreenClick=1;
 
     FileList fileList;
@@ -294,7 +296,12 @@ public class MediaPlayerController
             playButtonCount = 0;
             fc = new FileChooser();
             //fc.getExtensionFilters().add(new ExtensionFilter("*.flv", "*.mp4", "*.mpeg","*.mp3","*.mkv"));
+
+            if (fileCount > 0) {
+                fc.setInitialDirectory(new File(directory));
+            }
             File file = fc.showOpenDialog(null);
+
             if(file==null) return;
 
             Double std = (double) file.length() / (1024*1024); //File size in MB
@@ -311,6 +318,9 @@ public class MediaPlayerController
                 err.showAndWait();
             }
             else {
+                fileCount++;
+                directory = file.getAbsolutePath();
+                directory = directory.replace(file.getName(), "");
                 displayFile(file);
                 fileList = new FileList(file);
             }
