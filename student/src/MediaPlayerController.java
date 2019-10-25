@@ -87,6 +87,8 @@ public class MediaPlayerController
 
     Stage primaryStage;
 
+    FileEditor editor;
+
     boolean isFullScreen = false;
 
     @FXML
@@ -115,6 +117,7 @@ public class MediaPlayerController
         mediaView.fitHeightProperty().bind(borderPane.heightProperty().subtract(40));
        // hBox.prefWidthProperty().bind(borderPane.widthProperty());
 
+        editor = new FileEditor();
 
     }
 
@@ -326,6 +329,7 @@ public class MediaPlayerController
                 directory = directory.replace(file.getName(), "");
                 displayFile(file);
                 fileList = new FileList(file);
+                editor.setCurrentFile(file);
             }
         } catch (Exception ex) {
             //Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -428,18 +432,18 @@ public class MediaPlayerController
             toggleFullScreen(primaryStage);
         }
 	
-	if(event.getCode()==KeyCode.L){
-		TextInputDialog dialog = new TextInputDialog("HLS Stream Link");
-		dialog.setTitle("Open Network Stream");
-		dialog.setHeaderText("Open Network Stream");
-		dialog.setContentText("Enter network stream URL:");
-		Optional<String> result = dialog.showAndWait();
-		String linkURL = "";
-		if(result.isPresent()){
-			linkURL = result.get();
-		}
-		displayNetworkStream(linkURL);	
-	}
+        if(event.getCode()==KeyCode.L){
+            TextInputDialog dialog = new TextInputDialog("HLS Stream Link");
+            dialog.setTitle("Open Network Stream");
+            dialog.setHeaderText("Open Network Stream");
+            dialog.setContentText("Enter network stream URL:");
+            Optional<String> result = dialog.showAndWait();
+            String linkURL = "";
+            if(result.isPresent()){
+                linkURL = result.get();
+            }
+            displayNetworkStream(linkURL);
+        }
 
         if(event.getCode()==KeyCode.H) {
 
@@ -450,6 +454,11 @@ public class MediaPlayerController
             primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> hBox.setVisible(true));
             primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> pause.playFromStart());
 
+        }
+
+        if(event.getCode() == KeyCode.E)
+        {
+            editor.showEditorDialogue();
         }
 
     }
