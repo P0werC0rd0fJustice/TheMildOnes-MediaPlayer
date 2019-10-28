@@ -2,6 +2,7 @@
 import javafx.animation.PauseTransition;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -26,9 +27,11 @@ import java.util.Optional;
 import javafx.util.Duration;
 //import javafx.fxml.Initializable;
 
+import javax.naming.NameNotFoundException;
 import java.awt.*;
 import java.io.File;
 import java.util.Date;
+import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -94,8 +97,6 @@ public class MediaPlayerController
     @FXML
     public void initialize()
     {
-        System.out.println(playButton);
-
         //set tooltips
         playButton.setTooltip(new Tooltip("Play"));
         startButton.setTooltip(new Tooltip("Replay"));
@@ -245,7 +246,6 @@ public class MediaPlayerController
     void onTimeSliderChange(Observable ov)
     {
         if (timeSlider.isValueChanging()) {
-            //System.out.println(timeSlider.getValue());
             mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
             currentTime = Duration.seconds(timeSlider.getValue());
         }
@@ -357,7 +357,6 @@ public class MediaPlayerController
            // mediaPlayer.stop();
         }
         mediaPlayer = new MediaPlayer(media);
-        System.out.println(mediaPlayer + " " + mediaView);
         mediaView.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
         playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
@@ -408,8 +407,8 @@ public class MediaPlayerController
         mediaView.setOnScroll(e -> onSceneScroll(e));
 
         timeSlider.maxProperty().bind(Bindings.createDoubleBinding(
-                () -> mediaPlayer.getTotalDuration().toSeconds(),
-                mediaPlayer.totalDurationProperty()));
+                this::call, mediaPlayer.totalDurationProperty()));
+
     }
 
 
@@ -476,4 +475,14 @@ public class MediaPlayerController
         primaryStage = stage;
     }
 
+    private Double call() {
+        if(mediaPlayer.totalDurationProperty().getValue() != null)
+        {
+            return mediaPlayer.getTotalDuration().toSeconds();
+        }
+        else
+        {
+            return 0.0;
+        }
+    }
 }
