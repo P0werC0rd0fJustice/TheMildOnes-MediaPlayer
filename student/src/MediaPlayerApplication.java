@@ -9,7 +9,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.stage.Screen;
 
 public class MediaPlayerApplication extends Application {
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mediaPlayer.fxml"));
@@ -26,7 +25,6 @@ public class MediaPlayerApplication extends Application {
         primaryStage.setHeight(primaryScreenBounds.getHeight() - (primaryScreenBounds.getHeight()/10));
 
         primaryStage.show();
-
         controller.setStage(primaryStage);
     }
 
