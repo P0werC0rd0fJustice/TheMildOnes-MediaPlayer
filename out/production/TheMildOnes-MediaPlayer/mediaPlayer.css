@@ -1,0 +1,69 @@
+BorderPane {
+    -fx-background-color: black;
+    /*-fx-background-image: url('573012.png');
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1400 800;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+}
+
+HBox {
+    -fx-background-color: #000;
+}
+
+Button {
+    -fx-background-color: #80ced6;
+}
+
+Button:hover {
+    -fx-background-color: #000777;
+}
+
+#playButton {
+    -fx-background-image: url('uiImages/playbutton.png');
+}
+
+#startButton {
+    -fx-background-image: url('uiImages/replaybutton.png');
+}
+
+#backButton {
+    -fx-background-image: url('uiImages/rewindbutton.png');
+}
+
+#forwardButton {
+    -fx-background-image: url('uiImages/ffbutton.png');
+}
+
+#filesButton {
+    -fx-background-image: url('uiImages/filebutton.png');
+}
+
+#volumeButton {
+    -fx-background-image: url('uiImages/volumemaxbutton.png');
+}
+
+#infoButton {
+    -fx-background-image: url('uiImages/infobutton.png');
+}
+
+#timeLabel {
+    -fx-font-weight: bold;
+}
+
+#speedButton {
+
+}
+
+#volumeLabel {
+    -fx-font-size: 15;
+    -fx-font-weight: Bold;
+}
+
+#fullscreenbutton {
+ -fx-background-image: url("fullscreen.png");
+ -fx-background-size: 30px;
+ -fx-background-repeat: no-repeat;
+ -fx-background-position: center;
+ -fx-background-color: #000;
+}
