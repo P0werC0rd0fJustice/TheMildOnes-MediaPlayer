@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import java.util.Optional;
 import javafx.util.Duration;
 //import javafx.fxml.Initializable;
+import javafx.scene.input.*;
 
 import javax.naming.NameNotFoundException;
 import java.awt.*;
@@ -34,6 +35,7 @@ import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.*;
 
 import static javafx.application.Platform.runLater;
 
@@ -93,6 +95,8 @@ public class MediaPlayerController
     FileEditor editor;
 
     boolean isFullScreen = false;
+
+    ArrayList<Date> touches = new ArrayList<>();
 
     @FXML
     public void initialize()
@@ -220,6 +224,10 @@ public class MediaPlayerController
         mediaPlayer.setRate(1);
         speedSlider.setValue(50.0);
     }
+
+ @FXML protected void handlefullscreen(ActionEvent event) {
+  toggleFullScreen(primaryStage);
+ }
 
 
     void onVolumeSliderChange(Observable ov)
@@ -411,6 +419,14 @@ public class MediaPlayerController
 
     }
 
+ @FXML private void onmouseclick(MouseEvent event) {
+  if(event.getClickCount() == 2) {
+   toggleFullScreen(primaryStage);
+  }
+ }
+ @FXML private void ontouchclick(TouchEvent event) {
+  // todo event fires as a mouse/touchpad click and usually without 2 count
+ }
 
     @FXML
     private void handleOnKeyPressed(KeyEvent event)

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane id="borderPane" fx:id = "borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0" minWidth="0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController" onKeyPressed="#handleOnKeyPressed" onMouseEntered="#onSizeChange">
+<BorderPane id="borderPane" fx:id = "borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0" minWidth="0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController" onKeyPressed="#handleOnKeyPressed" onMouseEntered="#onSizeChange" onMouseClicked="#onmouseclick" onTouchReleased="#ontouchclick">
 <bottom>
    <HBox fx:id="hBox" alignment="CENTER" prefHeight="40.0" spacing="5.0" BorderPane.alignment="CENTER">
       <children>
@@ -44,6 +44,9 @@
           <Label id="volumeLabel" fx:id="volumeLabel" text="Vol:50%" textFill="WHITE" />
           <Button id="infoButton" fx:id="infoButton" mnemonicParsing="false" onAction="#handleInfoButtonAction" prefHeight="38.0" prefWidth="64.0" style="-fx-background-size: 30px; -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000;" />
 
+          <Button id="fullscreenbutton" fx:id="fullscreenbutton" mnemonicParsing="false" onAction="#handlefullscreen" prefHeight="40" prefWidth="40">
+              <cursor><Cursor fx:constant="HAND" /></cursor>
+          </Button>
       </children>
    </HBox>
 </bottom>
