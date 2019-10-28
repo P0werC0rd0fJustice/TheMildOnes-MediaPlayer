@@ -33,6 +33,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.Date;
 import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.*;
@@ -40,8 +41,7 @@ import java.util.*;
 import static javafx.application.Platform.runLater;
 
 
-public class MediaPlayerController
-{
+public class MediaPlayerController {
 
     @FXML
     MediaView mediaView;
@@ -56,10 +56,10 @@ public class MediaPlayerController
     Button playButton, forwardButton, backButton, filesButton, startButton, endButton, infoButton, speedButton, volumeButton;
 
     @FXML
-    Slider volumeSlider,timeSlider,slider,speedSlider;
+    Slider volumeSlider, timeSlider, slider, speedSlider;
 
     @FXML
-    Label timeLabel,speedLabel, volumeLabel, filenameLabel;
+    Label timeLabel, speedLabel, volumeLabel, filenameLabel;
 
     @FXML
     BorderPane borderPane;
@@ -68,12 +68,11 @@ public class MediaPlayerController
     HBox hBox;
 
     Duration duration;
-    int flag=0;
+    int flag = 0;
     double prev;
 
     FileChooser fc;
     MediaPlayer mediaPlayer;
-
 
 
     Media media;
@@ -81,12 +80,16 @@ public class MediaPlayerController
     DropShadow dropshadow;
     //BorderPane borderPane;
     Button enterButton = new Button();
+
     String fileName="";
     Image cur = new Image("uiImages/cursor.png");
     int playButtonCount = 0;
     int fileCount = 0;
     String directory = "";
     int fullScreenClick=1;
+
+    Toolkit tk = Toolkit.getDefaultToolkit();
+
 
     FileList fileList;
 
@@ -96,11 +99,12 @@ public class MediaPlayerController
 
     boolean isFullScreen = false;
 
-    ArrayList<Date> touches = new ArrayList<>();
+    long previousclick;
 
     @FXML
     public void initialize()
     {
+
         //set tooltips
         playButton.setTooltip(new Tooltip("Play"));
         startButton.setTooltip(new Tooltip("Replay"));
@@ -120,24 +124,22 @@ public class MediaPlayerController
 
         mediaView.fitWidthProperty().bind(borderPane.widthProperty());
         mediaView.fitHeightProperty().bind(borderPane.heightProperty().subtract(40));
-       // hBox.prefWidthProperty().bind(borderPane.widthProperty());
 
         editor = new FileEditor();
+
 
     }
 
     @FXML
-    protected void onSizeChange()
-    {
-        if(hBox.getWidth() <= 950 ){
+    protected void onSizeChange() {
+        if (hBox.getWidth() <= 950) {
             hBox.setSpacing(0);
             speedButton.setManaged(false);
             speedButton.setVisible(false);
             volumeLabel.setScaleX(0);
             volumeLabel.setScaleY(0.);
             volumeLabel.setManaged(false);
-        }
-        else{
+        } else {
             hBox.setSpacing(5);
             speedButton.setManaged(true);
             speedButton.setVisible(true);
@@ -149,8 +151,7 @@ public class MediaPlayerController
     }
 
     @FXML
-    protected void handlePlayButtonAction(ActionEvent event)
-    {
+    protected void handlePlayButtonAction(ActionEvent event) {
         playButtonCount++;
         if (playButtonCount % 2 == 1) {
             playButton.setStyle("-fx-background-image: url('uiImages/playbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
@@ -164,32 +165,27 @@ public class MediaPlayerController
     }
 
     @FXML
-    protected void handleFileButtonAction(ActionEvent event)
-    {
+    protected void handleFileButtonAction(ActionEvent event) {
         chooseFile(1);
     }
 
     @FXML
-    protected void handleStartButtonAction(ActionEvent event)
-    {
+    protected void handleStartButtonAction(ActionEvent event) {
         mediaPlayer.seek(Duration.ZERO);
     }
 
     @FXML
-    protected void handleBackButtonAction(ActionEvent event)
-    {
+    protected void handleBackButtonAction(ActionEvent event) {
         mediaPlayer.seek(mediaPlayer.getCurrentTime().divide(1.2));
     }
 
     @FXML
-    protected void handleForwardButtonAction(ActionEvent event)
-    {
+    protected void handleForwardButtonAction(ActionEvent event) {
         mediaPlayer.seek(mediaPlayer.getCurrentTime().multiply(1.2));
     }
 
     @FXML
-    protected void handleVolumeButtonAction(ActionEvent event)
-    {
+    protected void handleVolumeButtonAction(ActionEvent event) {
         flag++;
         if (flag % 2 == 1) {
             volumeButton.setStyle("-fx-background-image: url('uiImages/volumemutebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
@@ -209,8 +205,7 @@ public class MediaPlayerController
     }
 
     @FXML
-    protected void handleInfoButtonAction(ActionEvent event)
-    {
+    protected void handleInfoButtonAction(ActionEvent event) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setHeaderText("Details");
         a.setContentText(fileName);
@@ -219,19 +214,18 @@ public class MediaPlayerController
     }
 
     @FXML
-    protected void handleSpeedButtonAction(ActionEvent event)
-    {
+    protected void handleSpeedButtonAction(ActionEvent event) {
         mediaPlayer.setRate(1);
         speedSlider.setValue(50.0);
     }
 
- @FXML protected void handlefullscreen(ActionEvent event) {
-  toggleFullScreen(primaryStage);
- }
+    @FXML
+    protected void handlefullscreen(ActionEvent event) {
+        toggleFullScreen(primaryStage);
+    }
 
 
-    void onVolumeSliderChange(Observable ov)
-    {
+    void onVolumeSliderChange(Observable ov) {
         if (volumeSlider.isValueChanging()) {
             mediaPlayer.setVolume(volumeSlider.getValue() / 100.0);
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
@@ -251,8 +245,7 @@ public class MediaPlayerController
         }
     }
 
-    void onTimeSliderChange(Observable ov)
-    {
+    void onTimeSliderChange(Observable ov) {
         if (timeSlider.isValueChanging()) {
             mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
             currentTime = Duration.seconds(timeSlider.getValue());
@@ -264,18 +257,16 @@ public class MediaPlayerController
 
     }
 
-    void onSceneScroll(ScrollEvent event)
-    {
+    void onSceneScroll(ScrollEvent event) {
         volumeSlider.setValueChanging(true);
         double deltaY = event.getDeltaY();
         double prev = volumeSlider.getValue();
 
-        volumeSlider.setValue(prev + (deltaY/20));
+        volumeSlider.setValue(prev + (deltaY / 20));
     }
 
 
-    void onSpeedSliderChange(Observable ov)
-    {
+    void onSpeedSliderChange(Observable ov) {
         if (speedSlider.isValueChanging() || speedSlider.isPressed()) {
             double rate = speedSlider.getValue() / 10;
             if (rate < 1)
@@ -304,8 +295,7 @@ public class MediaPlayerController
     }
 
 
-    void chooseFile(int prev)
-    {
+    void chooseFile(int prev) {
         try {
             playButtonCount = 0;
             fc = new FileChooser();
@@ -318,9 +308,11 @@ public class MediaPlayerController
 
             if(file==null) return;
 
-            Double std = (double) file.length() / (1024*1024); //File size in MB
+
+            Double std = (double) file.length() / (1024 * 1024); //File size in MB
             String fileSize = String.format("%.2f", std);
             Date d = new Date(file.lastModified());
+
             //fileName = "Name: " + (String)file.getName() + "\nPath: " + getPath(file) + "\nSize: " + fileSize+"MB\n Last Modified: "+d.toString();
             fileName = FileInfo.fileInfoString(file);
 
@@ -335,6 +327,7 @@ public class MediaPlayerController
                 fileCount++;
                 directory = file.getAbsolutePath();
                 directory = directory.replace(file.getName(), "");
+
                 displayFile(file);
                 fileList = new FileList(file);
                 editor.setCurrentFile(file);
@@ -352,6 +345,7 @@ public class MediaPlayerController
         if (file.getName().substring(file.getName().length()-3,file.getName().length()).compareTo("mp3")==0) {
             flag2=0;
             ImageView img2=new ImageView();
+
             img2.setImage(image);
             img2.setFitWidth(1200);
             img2.setFitHeight(600);
@@ -362,7 +356,7 @@ public class MediaPlayerController
         media = new Media(new File(path).toURI().toString());
 
         if (prev == 1) {
-           // mediaPlayer.stop();
+            // mediaPlayer.stop();
         }
         mediaPlayer = new MediaPlayer(media);
         mediaView.setMediaPlayer(mediaPlayer);
@@ -382,8 +376,12 @@ public class MediaPlayerController
         playButton.setTooltip(new Tooltip("Pause"));
         addMediaPlayerListeners();
 
+
 	}
+
+
     Duration currentTime;
+
     protected void updateValues(Duration currentTime) {
         if (timeLabel != null) {
             runLater(() -> {
@@ -393,8 +391,7 @@ public class MediaPlayerController
     }
 
 
-    void addMediaPlayerListeners()
-    {
+    void addMediaPlayerListeners() {
         mediaPlayer.currentTimeProperty().addListener((Observable ov) -> {
             currentTime = mediaPlayer.getCurrentTime();
             updateValues(currentTime);
@@ -419,31 +416,19 @@ public class MediaPlayerController
 
     }
 
- @FXML private void onmouseclick(MouseEvent event) {
-  if(event.getClickCount() == 2) {
-   toggleFullScreen(primaryStage);
-  }
- }
- @FXML private void ontouchclick(TouchEvent event) {
-  // todo event fires as a mouse/touchpad click and usually without 2 count
- }
-
     @FXML
-    private void handleOnKeyPressed(KeyEvent event)
-    {
+    private void handleOnKeyPressed(KeyEvent event) {
         //play the next file when N is pressed
-        if (event.getCode().equals(KeyCode.N))
-        {
+        if (event.getCode().equals(KeyCode.N)) {
             displayFile(fileList.getNextSupportedFile());
         }
 
-        if(event.getCode().isDigitKey())
-        {
+        if (event.getCode().isDigitKey()) {
             Duration dur = NumberKeyNavigation.getTimeFromKey(event.getCode(), mediaPlayer.getTotalDuration());
             mediaPlayer.seek(dur);
         }
 
-        if(event.getCode()==KeyCode.F){
+        if (event.getCode() == KeyCode.F) {
             toggleFullScreen(primaryStage);
         }
 	
@@ -476,20 +461,22 @@ public class MediaPlayerController
             editor.showEditorDialogue();
         }
 
-    }
-
-    void toggleFullScreen(Stage primaryStage){
-        if (!primaryStage.isFullScreen()){
-            primaryStage.setFullScreen(true);
+        if(event.getCode() == KeyCode.T) {
+            testdoubleclick();
         }
-        else primaryStage.setFullScreen(false);
+    }
+
+    void toggleFullScreen(Stage primaryStage) {
+        if (!primaryStage.isFullScreen()) {
+            primaryStage.setFullScreen(true);
+        } else primaryStage.setFullScreen(false);
     }
 
 
-    public void setStage(Stage stage)
-    {
+    public void setStage(Stage stage) {
         primaryStage = stage;
     }
+
 
     private Double call() {
         if(mediaPlayer.totalDurationProperty().getValue() != null)
@@ -499,6 +486,50 @@ public class MediaPlayerController
         else
         {
             return 0.0;
+        }
+    }
+
+
+    public void onvideoclick() {
+        long now = new Date().getTime();
+        if (now - previousclick < 500) { // half second
+            previousclick = 0;
+            toggleFullScreen(primaryStage);
+        } else {
+            previousclick = now;
+        }
+    }
+    @FXML public void onvideoclick(MouseEvent event) {
+        onvideoclick();
+    }
+    public void testdoubleclick() {
+        try {
+            primaryStage.setFullScreen(false);
+            onvideoclick();
+            if (primaryStage.isFullScreen() == false) {
+                TimeUnit.MILLISECONDS.sleep(400);
+                onvideoclick();
+                if (primaryStage.isFullScreen()) {
+                    onvideoclick();
+                    if (primaryStage.isFullScreen()) {
+                        TimeUnit.MILLISECONDS.sleep(600);
+                        onvideoclick();
+                        if (primaryStage.isFullScreen()) {
+                            System.out.println("double click test: passed");
+                        } else {
+                            System.out.println("double click test: failed");
+                        }
+                    } else {
+                        System.out.println("double click test: failed");
+                    }
+                } else {
+                    System.out.println("double click test: failed");
+                }
+            } else {
+                System.out.println("double click test: failed");
+            }
+        } catch(InterruptedException error) {
+            System.out.println("double click test: " + error.toString());
         }
     }
 }
