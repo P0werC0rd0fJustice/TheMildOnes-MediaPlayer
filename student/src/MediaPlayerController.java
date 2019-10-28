@@ -444,7 +444,14 @@ public class MediaPlayerController {
             if(result.isPresent()){
                 linkURL = result.get();
             }
-            displayNetworkStream(linkURL);
+            if(urlValidator.validURL(linkURL)) displayNetworkStream(linkURL);
+	    else{
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Invalid URL");
+		alert.setHeaderText(null);
+		alert.setContentText("The entered URL is invalid. Try again.");
+		alert.showAndWait();
+		}
         }
 
         if(event.getCode()==KeyCode.H) {
