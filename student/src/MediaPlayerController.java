@@ -129,7 +129,6 @@ public class MediaPlayerController {
 
         chooseFile(1);
 
-
     }
 
     @FXML
@@ -224,6 +223,16 @@ public class MediaPlayerController {
     @FXML
     protected void handlefullscreen(ActionEvent event) {
         toggleFullScreen(primaryStage);
+    }
+    @FXML
+    void handleMouseIdle() {
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+        pause.setOnFinished(e -> hBox.setVisible(false));
+        pause.play();
+        primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> hBox.setVisible(true));
+        primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> pause.playFromStart());
+
     }
 
 
