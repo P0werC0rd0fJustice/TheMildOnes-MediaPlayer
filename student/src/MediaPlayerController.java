@@ -224,6 +224,16 @@ public class MediaPlayerController {
     protected void handlefullscreen(ActionEvent event) {
         toggleFullScreen(primaryStage);
     }
+    @FXML
+    void handleMouseIdle() {
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+
+        pause.setOnFinished(e -> hBox.setVisible(false));
+        pause.play();
+        primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> hBox.setVisible(true));
+        primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> pause.playFromStart());
+
+    }
 
 
     void onVolumeSliderChange(Observable ov) {
