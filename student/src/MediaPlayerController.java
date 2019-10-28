@@ -127,6 +127,7 @@ public class MediaPlayerController {
 
         editor = new FileEditor();
 
+        chooseFile(1);
 
     }
 
