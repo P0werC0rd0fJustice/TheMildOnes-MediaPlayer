@@ -16,7 +16,7 @@ public class urlValidationTest{
 	}
 
 	@Test
-	public void givenValidURL_whenValidCheck_thenReturnTrue2(){
+	public void givenInvalidURL_whenValidCheck_thenReturnFalse(){
 		String u1 = "gooogle.com";
 		String u2 = "http://reddit.com/r/programming";
 		String u3 = "https://youtube.co.uk/stream.m3uu8";
