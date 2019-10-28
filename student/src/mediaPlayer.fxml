@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane id="borderPane" fx:id = "borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0" minWidth="0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController" onKeyPressed="#handleOnKeyPressed" onMouseEntered="#onSizeChange">
+<BorderPane id="borderPane" fx:id = "borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0" minWidth="0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController" onKeyPressed="#handleOnKeyPressed" onMouseEntered="#onSizeChange" onMouseMoved="#handleMouseIdle">
 <bottom>
    <HBox fx:id="hBox" alignment="CENTER" prefHeight="40.0" spacing="5.0" BorderPane.alignment="CENTER">
       <children>
