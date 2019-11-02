@@ -429,6 +429,7 @@ public class MediaPlayerController {
 
     @FXML
     private void handleOnKeyPressed(KeyEvent event) {
+
         //play the next file when N is pressed
         if (event.getCode().equals(KeyCode.N)) {
             displayFile(fileList.getNextSupportedFile());
@@ -482,6 +483,23 @@ public class MediaPlayerController {
         if(event.getCode() == KeyCode.T) {
             testdoubleclick();
         }
+
+        if(event.getCode().equals(KeyCode.LEFT)) {
+            leftButtonAction();
+        }
+
+        if(event.getCode().equals(KeyCode.RIGHT)) {
+            rightButtonAction();
+        }
+    }
+
+
+    void leftButtonAction() {
+        mediaPlayer.seek(mediaPlayer.getCurrentTime().subtract(Duration.seconds(5)));
+    }
+
+    void rightButtonAction() {
+        mediaPlayer.seek(mediaPlayer.getCurrentTime().add((Duration.seconds(5))));
     }
 
     void toggleFullScreen(Stage primaryStage) {
