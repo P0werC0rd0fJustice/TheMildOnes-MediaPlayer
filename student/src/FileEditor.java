@@ -2,6 +2,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,8 @@ import java.util.Optional;
 public class FileEditor
 {
     File currentFile;
+
+    MediaPlayer curMediaPlayer;
 
     public void showEditorDialogue()
     {
@@ -29,14 +32,43 @@ public class FileEditor
         ButtonType copyFileButton = new ButtonType("Save A Copy");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        alert.getButtonTypes().setAll(copyFileButton, buttonTypeCancel);
+        alert.getButtonTypes().setAll(renameFileButton, copyFileButton, buttonTypeCancel);
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == copyFileButton)
         {
             showCopyDialogue();
         }
+        else if(result.get() == renameFileButton)
+        {
+            showRenameDialogue();
+        }
 
+    }
+
+    void showRenameDialogue()
+    {
+        if(currentFile == null)
+            return;
+
+        TextInputDialog dialog = new TextInputDialog(currentFile.getName());
+        dialog.setTitle("Rename current file");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Enter new file name:");
+
+        //get the response value
+        Optional<String> result = dialog.showAndWait();
+        if(result.isPresent())
+        {
+            //release the file
+            curMediaPlayer.stop();
+            curMediaPlayer.dispose();
+
+            //rename the file
+            boolean renamed = renameCurrentFile(result.get());
+            if(!renamed)
+                showUnsuccessfulRenameDialogue();
+        }
     }
 
     void showCopyDialogue()
@@ -69,10 +101,50 @@ public class FileEditor
         alert.showAndWait();
     }
 
+    void showUnsuccessfulRenameDialogue()
+    {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Rename Failed");
+        alert.setHeaderText(null);
+        alert.setContentText("Could not rename this file");
+
+        alert.showAndWait();
+    }
+
     public void setCurrentFile(File file)
     {
         currentFile = file;
     }
+
+    public void setCurMediaPlayer(MediaPlayer player)
+    {
+        curMediaPlayer = player;
+    }
+
+    //attempts to rename the currentFile
+    //returns false if unsuccessful
+    boolean renameCurrentFile(String newName)
+    {
+        System.out.println(currentFile.getPath());
+        File newFile = new File(currentFile.getPath() + "\\" + newName);
+
+        //don't overwrite a file that already has this name
+        if(newFile.exists() || !currentFile.canRead())
+            return false;
+
+        try
+        {
+            Path source = Paths.get(currentFile.getPath());
+            Files.move(source, source.resolveSibling(newName));
+        }
+        catch(IOException e)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
 
     //attempts to make a copy of currentFile
     //returns false if unsuccessful
@@ -97,28 +169,4 @@ public class FileEditor
 
         return true;
     }
-
-    //attempts to rename the currentFile
-    //returns false if unsuccessful
-  /*  boolean renameCurrentFile(String newName)
-    {
-        System.out.println(currentFile.getPath());
-        File newFile = new File(currentFile.getPath() + "\\" + newName);
-
-        if (newFile.exists())
-            return false;
-
-        try
-        {
-            Path source = Paths.get(currentFile.getPath());
-            Files.move(source, source.resolveSibling("newname.mp4"));
-        }
-        catch(IOException e)
-        {
-            System.out.println("didn't work");
-            return false;
-        }
-
-
-    }*/
 }

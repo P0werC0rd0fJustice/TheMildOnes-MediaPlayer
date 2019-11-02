@@ -351,6 +351,9 @@ public class MediaPlayerController {
     //opens the file in the mediaplayer
     void displayFile(File file)
     {
+        if(mediaPlayer!=null)
+            mediaPlayer.stop();
+
         String path = FileInfo.getPath(file);
         int flag2=1;
         if (file.getName().substring(file.getName().length()-3,file.getName().length()).compareTo("mp3")==0) {
@@ -375,6 +378,7 @@ public class MediaPlayerController {
         playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
         playButton.setTooltip(new Tooltip("Pause"));
         addMediaPlayerListeners();
+        editor.setCurMediaPlayer(mediaPlayer);
 
 
     }
