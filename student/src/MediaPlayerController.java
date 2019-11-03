@@ -19,7 +19,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.media.Media;
+import javafx.scene.media.Media.*;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.*;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -53,7 +55,7 @@ public class MediaPlayerController {
     private MediaView testMediaView;
 
     @FXML
-    Button playButton, forwardButton, backButton, filesButton, startButton, endButton, infoButton, speedButton, volumeButton;
+    public Button playButton, forwardButton, backButton, filesButton, startButton, endButton, infoButton, speedButton, volumeButton;
 
     @FXML
     Slider volumeSlider, timeSlider, slider, speedSlider;
@@ -72,7 +74,7 @@ public class MediaPlayerController {
     double prev;
 
     FileChooser fc;
-    MediaPlayer mediaPlayer;
+    public MediaPlayer mediaPlayer;
 
 
     Media media;
@@ -506,7 +508,6 @@ public class MediaPlayerController {
             return 0.0;
         }
     }
-
 
     public void onvideoclick() {
         long now = new Date().getTime();
