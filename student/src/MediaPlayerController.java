@@ -53,7 +53,7 @@ public class MediaPlayerController {
     private MediaView testMediaView;
 
     @FXML
-    Button playButton, forwardButton, backButton, filesButton, startButton, endButton, infoButton, speedButton, volumeButton;
+    Button playButton, forwardButton, backButton, filesButton, startButton, endButton, infoButton, speedButton, volumeButton, fullscreenbutton;
 
     @FXML
     Slider volumeSlider, timeSlider, slider, speedSlider;
@@ -222,7 +222,14 @@ public class MediaPlayerController {
 
     @FXML
     protected void handlefullscreen(ActionEvent event) {
-        toggleFullScreen(primaryStage);
+        if(primaryStage.isFullScreen()){
+		fullscreenbutton.setStyle("-fx-background-image: url('uiImages/fullscreen-open.png');-fx-background-size: 30px;-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-color: #000;");
+		toggleFullScreen(primaryStage);
+	}
+	else{
+		fullscreenbutton.setStyle("-fx-background-image: url('uiImages/fullscreen-close.png');-fx-background-size: 30px;-fx-background-repeat: no-repeat;-fx-background-position: center;-fx-background-color: #000;");
+		toggleFullScreen(primaryStage);
+	}
     }
     @FXML
     void handleMouseIdle() {
