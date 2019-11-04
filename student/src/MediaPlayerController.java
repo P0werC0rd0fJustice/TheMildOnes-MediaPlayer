@@ -444,6 +444,15 @@ public class MediaPlayerController {
     private void handleOnKeyPressed(KeyEvent event) {
         //play the next file when N is pressed
         prev = volumeSlider.getValue();
+
+        if (event.getCode() == KeyCode.UP) {
+            mediaPlayer.setVolume(prev  + 1);
+            volumeSlider.setValue(prev + 1);
+        }
+        if (event.getCode() == KeyCode.DOWN) {
+            mediaPlayer.setVolume(prev - 1);
+            volumeSlider.setValue(prev - 1);
+        }
         if (event.getCode().equals(KeyCode.N)) {
             displayFile(fileList.getNextSupportedFile());
         }
@@ -495,14 +504,6 @@ public class MediaPlayerController {
 
         if(event.getCode() == KeyCode.T) {
             testdoubleclick();
-        }
-        if (event.getCode() == KeyCode.UP) {
-            mediaPlayer.setVolume(prev  + 1);
-            volumeSlider.setValue(prev + 1);
-        }
-        if (event.getCode() == KeyCode.DOWN) {
-            mediaPlayer.setVolume(prev - 1);
-            volumeSlider.setValue(prev - 1);
         }
     }
 
