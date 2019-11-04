@@ -53,7 +53,10 @@ public class MediaPlayerController {
     private MediaView testMediaView;
 
     @FXML
-    Button playButton, forwardButton, backButton, filesButton, startButton, endButton, infoButton, speedButton, volumeButton, fullscreenbutton;
+    Button playButton, forwardButton, backButton, filesButton, startButton, endButton, infoButton, speedButton, volumeButton;
+
+    @FXML
+    Button fullscreenbutton;
 
     @FXML
     Slider volumeSlider, timeSlider, slider, speedSlider;
