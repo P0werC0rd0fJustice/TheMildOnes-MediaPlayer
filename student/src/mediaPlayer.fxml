@@ -26,7 +26,7 @@
               <cursor>
                   <Cursor fx:constant="HAND" />
               </cursor></Button>
-          <Button id="playButton" fx:id="playButton" mnemonicParsing="false" onAction="#handlePlayButtonAction" prefHeight="30" prefWidth="30" style="-fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000; -fx-background-size: cover, auto; ">
+          <Button id="playButton" fx:id="playButton" mnemonicParsing="false" onMouseClicked="#handlePlayButtonAction" prefHeight="30" prefWidth="30" style="-fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000; -fx-background-size: cover, auto; ">
               <cursor>
                   <Cursor fx:constant="HAND" />
               </cursor></Button>
@@ -51,6 +51,6 @@
    </HBox>
 </bottom>
 <center>
-   <MediaView id="mediaView" fx:id="mediaView" BorderPane.alignment="CENTER" onMouseClicked="#onvideoclick"/>
+   <MediaView id="mediaView" fx:id="mediaView" BorderPane.alignment="CENTER" onMouseClicked="#onvideoclick" onMousePressed="#handlePlayButtonAction"/>
 </center>
 </BorderPane>
