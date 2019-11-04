@@ -15,6 +15,7 @@ public class urlValidationTest{
 		assertTrue(v3);
 	}
 
+	@Test
 	public void givenInvalidURL_whenValidCheck_thenReturnFalse(){
 		String u1 = "gooogle.com";
 		String u2 = "http://reddit.com/r/programming";
