@@ -17,7 +17,7 @@ public class FileEditorTest
     @Before
     public void createEditorObject()
     {
-        editor = new FileEditor();
+        editor = new FileEditor(null);
     }
 
     @Test

@@ -125,7 +125,7 @@ public class MediaPlayerController {
         mediaView.fitWidthProperty().bind(borderPane.widthProperty());
         mediaView.fitHeightProperty().bind(borderPane.heightProperty().subtract(40));
 
-        editor = new FileEditor();
+        editor = new FileEditor(this);
 
         chooseFile(1);
 
@@ -553,5 +553,11 @@ public class MediaPlayerController {
         } catch(InterruptedException error) {
             System.out.println("double click test: " + error.toString());
         }
+    }
+
+
+    public void resumeRenamedFile(File file)
+    {
+        displayFile(file);
     }
 }

@@ -17,6 +17,12 @@ public class FileEditor
     File currentFile;
 
     MediaPlayer curMediaPlayer;
+    MediaPlayerController controller;
+
+    public FileEditor(MediaPlayerController controller)
+    {
+        this.controller = controller;
+    }
 
     public void showEditorDialogue()
     {
@@ -68,6 +74,8 @@ public class FileEditor
             boolean renamed = renameCurrentFile(result.get());
             if(!renamed)
                 showUnsuccessfulRenameDialogue();
+
+            controller.resumeRenamedFile(currentFile);
         }
     }
 
@@ -135,7 +143,8 @@ public class FileEditor
         try
         {
             Path source = Paths.get(currentFile.getPath());
-            Files.move(source, source.resolveSibling(newName));
+            Path newPath = Files.move(source, source.resolveSibling(newName));
+            currentFile = new File(newPath.toString());
         }
         catch(IOException e)
         {
