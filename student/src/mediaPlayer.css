@@ -61,9 +61,10 @@ Button:hover {
 }
 
 #fullscreenbutton {
- -fx-background-image: url("fullscreen.png");
+ -fx-background-image: url("uiImages/fullscreen-open.png");
  -fx-background-size: 30px;
  -fx-background-repeat: no-repeat;
  -fx-background-position: center;
  -fx-background-color: #000;
 }
+
