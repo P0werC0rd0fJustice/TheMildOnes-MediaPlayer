@@ -249,7 +249,20 @@ public class MediaPlayerController {
             volumeButton.setStyle("-fx-background-image: url('uiImages/volumemutebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             volumeButton.setTooltip(new Tooltip("Mute"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
-        } else {
+        } else  if (volumeSlider.getValue() >= 1 && volumeSlider.getValue() < 34) {
+            volumeButton.setStyle("-fx-background-image: url('uiImages/volumetier1.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+            volumeButton.setTooltip(new Tooltip("Volume"));
+            volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
+        }else  if (volumeSlider.getValue() >= 34 && volumeSlider.getValue() < 68) {
+            volumeButton.setStyle("-fx-background-image: url('uiImages/volumetier2.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+            volumeButton.setTooltip(new Tooltip("Volume"));
+            volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
+        }else  if (volumeSlider.getValue() >= 68 && volumeSlider.getValue() < 100) {
+            volumeButton.setStyle("-fx-background-image: url('uiImages/volumetier3.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+            volumeButton.setTooltip(new Tooltip("Volume"));
+            volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
+        }
+        else {
             volumeButton.setStyle("-fx-background-image: url('uiImages/volumemaxbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
             volumeButton.setTooltip(new Tooltip("Volume"));
             volumeLabel.setText("Vol:" + Integer.toString((int) (volumeSlider.getValue())) + "%");
@@ -435,6 +448,16 @@ public class MediaPlayerController {
     private void handleOnKeyPressed(KeyEvent event) {
 
         //play the next file when N is pressed
+        prev = volumeSlider.getValue();
+
+        if (event.getCode() == KeyCode.UP) {
+            mediaPlayer.setVolume(prev  + 1);
+            volumeSlider.setValue(prev + 1);
+        }
+        if (event.getCode() == KeyCode.DOWN) {
+            mediaPlayer.setVolume(prev - 1);
+            volumeSlider.setValue(prev - 1);
+        }
         if (event.getCode().equals(KeyCode.N)) {
             displayFile(fileList.getNextSupportedFile());
         }
