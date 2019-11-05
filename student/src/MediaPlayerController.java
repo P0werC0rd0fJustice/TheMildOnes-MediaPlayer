@@ -154,7 +154,7 @@ public class MediaPlayerController {
     }
 
     @FXML
-    protected void handlePlayButtonAction(ActionEvent event) {
+    protected void handlePlayButtonAction() {
         playButtonCount++;
         if (playButtonCount % 2 == 1) {
             playButton.setStyle("-fx-background-image: url('uiImages/playbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
