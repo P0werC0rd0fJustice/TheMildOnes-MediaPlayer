@@ -36,9 +36,10 @@ public class FileEditor
 
         ButtonType renameFileButton = new ButtonType("Edit File Name");
         ButtonType copyFileButton = new ButtonType("Save A Copy");
+        ButtonType deleteFileButton = new ButtonType("Delete File");
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        alert.getButtonTypes().setAll(renameFileButton, copyFileButton, buttonTypeCancel);
+        alert.getButtonTypes().setAll(renameFileButton, copyFileButton, deleteFileButton, buttonTypeCancel);
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.get() == copyFileButton)
@@ -48,6 +49,10 @@ public class FileEditor
         else if(result.get() == renameFileButton)
         {
             showRenameDialogue();
+        }
+        else if(result.get() == deleteFileButton)
+        {
+            showDeleteFileConfirmationDialogue();
         }
 
     }
@@ -133,11 +138,10 @@ public class FileEditor
     //returns false if unsuccessful
     boolean renameCurrentFile(String newName)
     {
-        System.out.println(currentFile.getPath());
         File newFile = new File(currentFile.getPath() + "\\" + newName);
 
         //don't overwrite a file that already has this name
-        if(newFile.exists() || !currentFile.canRead())
+        if(newFile.exists() || !currentFile.canWrite())
             return false;
 
         try
@@ -177,5 +181,70 @@ public class FileEditor
         }
 
         return true;
+    }
+
+
+    void showDeleteFileConfirmationDialogue()
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete File?");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to delete " + currentFile.getName() + "?");
+
+        ButtonType deleteButton = new ButtonType("Delete");
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(deleteButton, cancelButton);
+
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.get() == deleteButton)
+        {
+            tryDeleteCurrentFile();
+        }
+        else
+        {
+
+        }
+    }
+
+
+    void tryDeleteCurrentFile()
+    {
+        //first the file must be released from the media player
+        curMediaPlayer.stop();
+        curMediaPlayer.dispose();
+
+        boolean deleted = deleteCurrentFile();
+        System.out.println(deleted);
+        //only resume the media player if the deletion failed
+        if(!deleted)
+        {
+            showUnsuccessfulDeleteDialogue();
+            controller.resumeRenamedFile(currentFile);
+        }
+        else//file deleted, open file picker
+        {
+            //controller.showFileDialogue();
+        }
+    }
+
+    void showUnsuccessfulDeleteDialogue()
+    {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Delete Failed");
+        alert.setHeaderText(null);
+        alert.setContentText("Could not delete this file");
+        alert.showAndWait();
+    }
+
+
+    boolean deleteCurrentFile()
+    {
+        if(!currentFile.canWrite())
+            return false;
+
+        //delete() returns true if the file was deleted successfully
+        return currentFile.delete();
     }
 }
