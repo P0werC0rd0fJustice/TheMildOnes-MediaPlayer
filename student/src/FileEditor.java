@@ -216,7 +216,7 @@ public class FileEditor
         curMediaPlayer.dispose();
 
         boolean deleted = deleteCurrentFile();
-        System.out.println(deleted);
+        
         //only resume the media player if the deletion failed
         if(!deleted)
         {
