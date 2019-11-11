@@ -178,11 +178,15 @@ public class MediaPlayerController {
     @FXML
     protected void handleStartButtonAction(ActionEvent event) {
         mediaPlayer.seek(Duration.ZERO);
+        playButton.setVisible(true);
+        playButton.setManaged(true);
     }
 
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
         mediaPlayer.seek(mediaPlayer.getCurrentTime().divide(1.2));
+        playButton.setVisible(true);
+        playButton.setManaged(true);
     }
 
     @FXML
@@ -285,12 +289,15 @@ public class MediaPlayerController {
         if (timeSlider.isValueChanging()) {
             mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
             currentTime = Duration.seconds(timeSlider.getValue());
+            playButton.setVisible(true);
+            playButton.setManaged(true);
         }
         if (timeSlider.isPressed()) {
             mediaPlayer.seek(Duration.seconds(timeSlider.getValue()));
             currentTime = Duration.seconds(timeSlider.getValue());
+            playButton.setVisible(true);
+            playButton.setManaged(true);
         }
-
     }
 
     void onSceneScroll(ScrollEvent event) {
@@ -402,6 +409,8 @@ public class MediaPlayerController {
         mediaPlayer.setAutoPlay(true);
         playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
         playButton.setTooltip(new Tooltip("Pause"));
+        playButton.setManaged(true);
+        playButton.setVisible(true);
         addMediaPlayerListeners();
         editor.setCurMediaPlayer(mediaPlayer);
 
@@ -454,6 +463,11 @@ public class MediaPlayerController {
         timeSlider.maxProperty().bind(Bindings.createDoubleBinding(
                 this::call, mediaPlayer.totalDurationProperty()));
 
+        mediaPlayer.setOnEndOfMedia(() -> {
+            mediaPlayer.pause();
+            playButton.setVisible(false);
+            playButton.setManaged(false);
+        });
     }
 
     @FXML
