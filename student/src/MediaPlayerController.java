@@ -226,12 +226,17 @@ public class MediaPlayerController {
     }
     @FXML
     void handleMouseIdle() {
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
 
         pause.setOnFinished(e -> hBox.setVisible(false));
-        pause.play();
+
         primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> hBox.setVisible(true));
         primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> pause.playFromStart());
+
+        primaryStage.getScene().addEventFilter(KeyEvent.KEY_RELEASED, e -> hBox.setVisible(true));
+        primaryStage.getScene().addEventFilter(KeyEvent.KEY_RELEASED, e -> pause.playFromStart());
+
+
 
     }
 
