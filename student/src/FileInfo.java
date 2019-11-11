@@ -10,7 +10,7 @@ public class FileInfo
     public static boolean supportedFile(String fileName)
     {
 
-        String[] supportedExtensions = {"mp3", "mp4", "flv", "mpeg"};
+        String[] supportedExtensions = { "mp3", "mp4", "flv", "mpeg", "aif", "aiff", "m3u8", "m4a", "m4v", "wav" };
 
         for(int i=0; i<supportedExtensions.length; i++)
         {
