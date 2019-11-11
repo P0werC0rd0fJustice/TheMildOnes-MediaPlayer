@@ -340,8 +340,6 @@ public class MediaPlayerController {
             var formats = new ExtensionFilter("Media Files", "*.mp3", "*.mp4", "*.flv", "*.mpeg", "*.aif", "*.aiff", "*.m3u8", "*.m4a", "*.m4v", "*.wav");
             fc.getExtensionFilters().add(formats);
 
-            //fc.getExtensionFilters().add(new ExtensionFilter("*.flv", "*.mp4", "*.mpeg","*.mp3","*.mkv"));
-
             if (fileCount > 0) {
                 fc.setInitialDirectory(new File(directory));
             }
@@ -357,14 +355,6 @@ public class MediaPlayerController {
             //fileName = "Name: " + (String)file.getName() + "\nPath: " + getPath(file) + "\nSize: " + fileSize+"MB\n Last Modified: "+d.toString();
             fileName = FileInfo.fileInfoString(file);
 
-            if (!FileInfo.supportedFile(file.getName())) {
-                Alert err = new Alert(Alert.AlertType.ERROR);
-                err.setTitle("ERROR!");
-                err.setHeaderText("Not Supported");
-                err.setContentText("Invalid File Type. Please choose again among the following file types : mp3,mp4,mpeg,flv");
-                err.showAndWait();
-            }
-            else {
                 fileCount++;
                 directory = file.getAbsolutePath();
                 directory = directory.replace(file.getName(), "");
@@ -372,7 +362,7 @@ public class MediaPlayerController {
                 displayFile(file);
                 fileList = new FileList(file);
                 editor.setCurrentFile(file);
-            }
+
         } catch (Exception ex) {
             //Logger.getLogger(MainMediaPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -526,6 +516,7 @@ public class MediaPlayerController {
 
         if(event.getCode() == KeyCode.T) {
             testdoubleclick();
+            testfilefiler();
         }
 
         if(event.getCode().equals(KeyCode.LEFT)) {
@@ -612,6 +603,16 @@ public class MediaPlayerController {
         }
     }
 
+    public void testfilefiler() {
+        var chooser = new FileChooser();
+        var formats = new ExtensionFilter("Media Files", "*.mp3", "*.mp4", "*.flv", "*.mpeg", "*.aif", "*.aiff", "*.m3u8", "*.m4a", "*.m4v", "*.wav");
+        chooser.getExtensionFilters().add(formats);
+        if(chooser.getExtensionFilters().get(0).getExtensions().size() == 10) {
+            System.out.println("file filter test: passed");
+        } else {
+            System.out.println("file filter test: failed");
+        }
+    }
 
     public void resumeRenamedFile(File file)
     {
