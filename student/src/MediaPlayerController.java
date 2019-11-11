@@ -230,13 +230,11 @@ public class MediaPlayerController {
 
         pause.setOnFinished(e -> hBox.setVisible(false));
 
-        primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> hBox.setVisible(true));
-        primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> pause.playFromStart());
-
         primaryStage.getScene().addEventFilter(KeyEvent.KEY_RELEASED, e -> hBox.setVisible(true));
         primaryStage.getScene().addEventFilter(KeyEvent.KEY_RELEASED, e -> pause.playFromStart());
 
-
+        primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> hBox.setVisible(true));
+        primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> pause.playFromStart());
 
     }
 
