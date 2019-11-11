@@ -24,6 +24,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.*;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.*;
 import javafx.stage.Stage;
 import java.util.Optional;
 import javafx.util.Duration;
@@ -312,6 +313,10 @@ public class MediaPlayerController {
         try {
             playButtonCount = 0;
             fc = new FileChooser();
+
+            var formats = new ExtensionFilter("Media Files", "*.mp3", "*.mp4", "*.flv", "*.mpeg", "*.aif", "*.aiff", "*.m3u8", "*.m4a", "*.m4v", "*.wav");
+            fc.getExtensionFilters().add(formats);
+
             //fc.getExtensionFilters().add(new ExtensionFilter("*.flv", "*.mp4", "*.mpeg","*.mp3","*.mkv"));
 
             if (fileCount > 0) {
