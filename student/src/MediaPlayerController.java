@@ -632,4 +632,9 @@ public class MediaPlayerController {
     {
         displayFile(file);
     }
+
+    public void showFileDialogue()
+    {
+        chooseFile(1);
+    }
 }
