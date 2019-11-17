@@ -2,7 +2,6 @@
 import javafx.animation.PauseTransition;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,9 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.media.Media;
-import javafx.scene.media.Media.*;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaPlayer.*;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.*;
@@ -29,17 +26,11 @@ import javafx.stage.Stage;
 import java.util.Optional;
 import javafx.util.Duration;
 //import javafx.fxml.Initializable;
-import javafx.scene.input.*;
 
-import javax.naming.NameNotFoundException;
 import java.awt.*;
 import java.io.File;
 import java.util.Date;
-import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.*;
 
 import static javafx.application.Platform.runLater;
 
@@ -102,6 +93,7 @@ public class MediaPlayerController {
     Stage primaryStage;
 
     FileEditor editor;
+    FrameSaver frameSaver;
 
     boolean isFullScreen = false;
 
@@ -132,6 +124,9 @@ public class MediaPlayerController {
         mediaView.fitHeightProperty().bind(borderPane.heightProperty().subtract(40));
 
         editor = new FileEditor(this);
+
+        frameSaver = new FrameSaver();
+        frameSaver.setMediaView(mediaView);
 
         chooseFile(1);
 
@@ -373,6 +368,7 @@ public class MediaPlayerController {
 
                 displayFile(file);
                 fileList = new FileList(file);
+                frameSaver.setCurrentFile(file);
                 editor.setCurrentFile(file);
 
         } catch (Exception ex) {
@@ -412,6 +408,7 @@ public class MediaPlayerController {
         playButton.setManaged(true);
         playButton.setVisible(true);
         addMediaPlayerListeners();
+        //primaryStage.setTitle("Mild Ones Media Player: " + file.getName());
         editor.setCurMediaPlayer(mediaPlayer);
 
 
@@ -526,6 +523,16 @@ public class MediaPlayerController {
             primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> hBox.setVisible(true));
             primaryStage.getScene().addEventFilter(MouseEvent.MOUSE_MOVED, e -> pause.playFromStart());
 
+        }
+
+        if(event.getCode() == KeyCode.S)
+        {
+            //pause media player
+            if(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING)
+                handlePlayButtonAction();
+
+            //save frame dialog
+            frameSaver.showFrameSaveDialog();
         }
 
         if(event.getCode() == KeyCode.E)
