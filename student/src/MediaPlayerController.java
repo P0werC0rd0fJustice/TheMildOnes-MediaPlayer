@@ -80,7 +80,6 @@ public class MediaPlayerController {
 
     String fileName="";
     Image cur = new Image("uiImages/cursor.png");
-    int playButtonCount = 0;
     int fileCount = 0;
     String directory = "";
     int fullScreenClick=1;
@@ -154,18 +153,8 @@ public class MediaPlayerController {
 
     @FXML
     protected void handlePlayButtonAction() {
-        if(videoEnd == false) {
-            playButtonCount++;
-            if (playButtonCount % 2 == 1) {
-                playButton.setStyle("-fx-background-image: url('uiImages/playbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
-                playButton.setTooltip(new Tooltip("Play"));
-                mediaPlayer.pause();
-            } else {
-                playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
-                playButton.setTooltip(new Tooltip("Pause"));
-                mediaPlayer.play();
-            }
-        }
+
+        playpause();
     }
 
     @FXML
@@ -345,7 +334,6 @@ public class MediaPlayerController {
 
     void chooseFile(int prev) {
         try {
-            playButtonCount = 0;
             fc = new FileChooser();
 
             var formats = new ExtensionFilter("Media Files", "*.mp3", "*.mp4", "*.flv", "*.mpeg", "*.aif", "*.aiff", "*.m3u8", "*.m4a", "*.m4v", "*.wav");
@@ -562,14 +550,41 @@ public class MediaPlayerController {
         } else if(event.getCode().equals(KeyCode.RIGHT)) {
             rightButtonAction();
         }
+
+        if(event.getCode().equals(KeyCode.PLAY)) {
+            play();
+        }
+        if(event.getCode().equals(KeyCode.PAUSE)) {
+            pause();
+        }
     }
+
 
     void frameLeft() {
         mediaPlayer.seek(mediaPlayer.getCurrentTime().subtract(Duration.millis((30))));
     }
 
-    void frameRight() {
+    void frameRight()
+    {
         mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.millis((50))));
+    }
+
+    void play() {
+        mediaPlayer.play();
+        playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+        playButton.setTooltip(new Tooltip("Pause"));
+    }
+    void pause() {
+        mediaPlayer.pause();
+        playButton.setStyle("-fx-background-image: url('uiImages/playbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
+        playButton.setTooltip(new Tooltip("Play"));
+    }
+    void playpause() {
+        if(mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+            pause();
+        } else if(mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+            play();
+        }
     }
 
     void leftButtonAction() {
@@ -617,6 +632,18 @@ public class MediaPlayerController {
     @FXML public void onvideoclick(MouseEvent event) {
         onvideoclick();
     }
+
+    public void resumeRenamedFile(File file)
+    {
+        displayFile(file);
+    }
+
+    public void showFileDialogue()
+    {
+        chooseFile(1);
+    }
+
+
     public void testdoubleclick() {
         try {
             primaryStage.setFullScreen(false);
@@ -659,13 +686,68 @@ public class MediaPlayerController {
         }
     }
 
-    public void resumeRenamedFile(File file)
-    {
-        displayFile(file);
+    void testplay() {
+        try {
+            if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                pause();
+                TimeUnit.MILLISECONDS.sleep(100);
+            }
+            if (mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+                play();
+                TimeUnit.MILLISECONDS.sleep(100);
+                if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                    System.out.println("play test: passed");
+                } else {
+                    System.out.println("play test: failed");
+                }
+            }
+        } catch(InterruptedException error) {
+            System.out.println("play test: " + error.toString());
+        }
     }
+    /*void testpause() {
+        try {
+        if(mediaPlayer.getStatus() == Status.PAUSED) {
+            play();
+            TimeUnit.MILLISECONDS.sleep(100);
+        }
+        if(mediaPlayer.getStatus() == Status.PLAYING) {
+            pause();
+            TimeUnit.MILLISECONDS.sleep(100);
+            if(mediaPlayer.getStatus() == Status.PAUSED) {
+                System.out.println("pause test: passed");
+            } else {
+                System.out.println("pause test: failed");
+            }
+        }
+        } catch(InterruptedException error) {
+            System.out.println("pause test: " + error.toString());
+        }
+    }
+    void testplaypause() {
+        try {
+        if(mediaPlayer.getStatus() == Status.PLAYING) {
+            pause();
+            TimeUnit.MILLISECONDS.sleep(100);
+        }
+        if(mediaPlayer.getStatus() == Status.PAUSED) {
+            playpause();
+            TimeUnit.MILLISECONDS.sleep(100);
+            if(mediaPlayer.getStatus() == Status.PLAYING) {
+                playpause();
+                TimeUnit.MILLISECONDS.sleep(100);
+                if(mediaPlayer.getStatus() == Status.PAUSED) {
+                    System.out.println("play pause test: passed");
+                } else {
+                    System.out.println("play pause test: failed");
+                }
+            } else {
+                System.out.println("play pause test: failed");
+            }
+        }
+        } catch(InterruptedException error) {
+            System.out.println("play pause test: " + error.toString());
+        }
+    }*/
 
-    public void showFileDialogue()
-    {
-        chooseFile(1);
-    }
 }
