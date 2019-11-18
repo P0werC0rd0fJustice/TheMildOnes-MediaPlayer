@@ -35,15 +35,7 @@ public class MediaPlayerApplication extends Application {
         primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if(event.getCode() == KeyCode.SPACE) {
                 event.consume();
-                if(controller.mediaPlayer.getStatus() == Status.PLAYING) {
-                    controller.mediaPlayer.pause();
-                    controller.playButton.setStyle("-fx-background-image: url('uiImages/playbutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
-                    controller.playButton.setTooltip(new Tooltip("Play"));
-                } else if(controller.mediaPlayer.getStatus() == Status.PAUSED) {
-                    controller.mediaPlayer.play();
-                    controller.playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
-                    controller.playButton.setTooltip(new Tooltip("Pause"));
-                }
+                controller.playpause();
             }
         });
     }
