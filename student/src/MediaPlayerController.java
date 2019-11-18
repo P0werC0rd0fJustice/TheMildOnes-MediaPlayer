@@ -129,6 +129,7 @@ public class MediaPlayerController {
 
         chooseFile(1);
 
+
     }
 
     @FXML
@@ -391,8 +392,6 @@ public class MediaPlayerController {
         playButton.setStyle("-fx-background-image: url('uiImages/pausebutton.png'); -fx-background-size: cover, auto; -fx-background-color: #000;");
         playButton.setTooltip(new Tooltip("Pause"));
         addMediaPlayerListeners();
-
-
     }
     void displayNetworkStream(String url){
 	media = new Media(url);
@@ -457,6 +456,7 @@ public class MediaPlayerController {
             volumeSlider.setValue(prev - 1);
         }
         if (event.getCode().equals(KeyCode.N)) {
+            mediaPlayer.pause();
             displayFile(fileList.getNextSupportedFile());
         }
 
