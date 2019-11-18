@@ -545,15 +545,26 @@ public class MediaPlayerController {
             testfilefiler();
         }
 
-        if(event.getCode().equals(KeyCode.LEFT)) {
+        if(event.isShiftDown() && event.getCode().equals(KeyCode.LEFT)) {
+            frameLeft();
+        } else if(event.getCode().equals(KeyCode.LEFT)) {
             leftButtonAction();
         }
 
-        if(event.getCode().equals(KeyCode.RIGHT)) {
+        if(event.isShiftDown() && event.getCode().equals(KeyCode.RIGHT)) {
+            frameRight();
+        } else if(event.getCode().equals(KeyCode.RIGHT)) {
             rightButtonAction();
         }
     }
 
+    void frameLeft() {
+        mediaPlayer.seek(mediaPlayer.getCurrentTime().subtract(Duration.millis((30))));
+    }
+
+    void frameRight() {
+        mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.millis((50))));
+    }
 
     void leftButtonAction() {
         mediaPlayer.seek(mediaPlayer.getCurrentTime().subtract(Duration.seconds(5)));
