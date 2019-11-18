@@ -408,7 +408,6 @@ public class MediaPlayerController {
         playButton.setManaged(true);
         playButton.setVisible(true);
         addMediaPlayerListeners();
-        //primaryStage.setTitle("Mild Ones Media Player: " + file.getName());
         editor.setCurMediaPlayer(mediaPlayer);
 
 
