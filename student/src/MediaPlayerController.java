@@ -131,6 +131,7 @@ public class MediaPlayerController {
 
         chooseFile(1);
 
+
     }
 
     @FXML
@@ -411,9 +412,9 @@ public class MediaPlayerController {
         playButton.setManaged(true);
         playButton.setVisible(true);
         addMediaPlayerListeners();
+
         //primaryStage.setTitle("Mild Ones Media Player: " + file.getName());
         editor.setCurMediaPlayer(mediaPlayer);
-
 
     }
     void displayNetworkStream(String url){
@@ -486,6 +487,7 @@ public class MediaPlayerController {
             volumeSlider.setValue(prev - 1);
         }
         if (event.getCode().equals(KeyCode.N)) {
+            mediaPlayer.pause();
             displayFile(fileList.getNextSupportedFile());
         }
 
