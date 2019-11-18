@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<BorderPane id="borderPane" fx:id = "borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0" minWidth="0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController" onKeyReleased="#handleOnKeyPressed" onMouseEntered="#onSizeChange" onMouseMoved="#handleMouseIdle" focusTraversable="true">
+<BorderPane id="borderPane" fx:id = "borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0" minWidth="0" prefHeight="700.0" prefWidth="1200.0" stylesheets="@mediaPlayer.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MediaPlayerController" onKeyReleased="#handleOnKeyPressed" onMouseMoved="#handleMouseIdle"  focusTraversable="true" >
 <bottom>
    <HBox fx:id="hBox" alignment="CENTER" prefHeight="40.0" spacing="5.0" BorderPane.alignment="CENTER">
       <children>
@@ -39,9 +39,10 @@
           <Button id="volumeButton" fx:id="volumeButton" mnemonicParsing="false" onAction="#handleVolumeButtonAction" prefHeight="30" prefWidth="30" style="-fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000; -fx-background-size: cover, auto;">
               <cursor>
                   <Cursor fx:constant="HAND" />
-              </cursor></Button>
+              </cursor>
+          </Button>
           <Slider id="volumeSlider" fx:id="volumeSlider" prefHeight="14.0" prefWidth="61.0" value="50.0" focusTraversable="false"/>
-          <Label id="volumeLabel" fx:id="volumeLabel" text="Vol:50%" textFill="WHITE" />
+          <Label id="volumeLabel" fx:id="volumeLabel" text="50%" textFill="WHITE" prefWidth="40"/>
           <Button id="infoButton" fx:id="infoButton" mnemonicParsing="false" onAction="#handleInfoButtonAction" prefHeight="38.0" prefWidth="64.0" style="-fx-background-size: 30px; -fx-background-repeat: no-repeat; -fx-background-position: center; -fx-background-color: #000;" />
 
           <Button id="fullscreenbutton" fx:id="fullscreenbutton" mnemonicParsing="false" onAction="#handlefullscreen" prefHeight="40" prefWidth="40">

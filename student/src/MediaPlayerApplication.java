@@ -23,7 +23,7 @@ public class MediaPlayerApplication extends Application {
         primaryStage.setTitle("Mild Ones Media Player");
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.getIcons().add(new Image("windowImages/media_player_icon_by_xylomon.png"));
-        primaryStage.setMinWidth(700.0);
+        primaryStage.setMinWidth(720.0);
 
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setWidth(primaryScreenBounds.getWidth() - (primaryScreenBounds.getWidth()/4));
@@ -46,6 +46,8 @@ public class MediaPlayerApplication extends Application {
                 }
             }
         });
+
+        primaryStage.widthProperty().addListener(e -> controller.onSizeChange());
     }
 
 
