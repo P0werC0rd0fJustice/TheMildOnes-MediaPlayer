@@ -21,3 +21,4 @@ To run the application, go to the `/student/src/` directory and execute the comm
 Our first priority is to refactor the code to make it more maintainable and extensible. The code for the media player is written entirely in a single .java source file. The methods are very long and the code in general violates many software design principles. The refactoring will include breaking up methods, forming new classes out of existing code, cleaning up code logic, and adding comments. The media player also has several bugs that need to be fixed, such as throwing errors when opening some files and unresponsive UI. Once the current bugs are fixed, we will move on to enhancements and new features. These will include a clean and modern user interface, support for more file types, streaming video support, and an audio visualizer for audio files.
 
 ![User interface](./UI_screenshot.png)
+Video still from *The Late Show with Stephen Colbert*
